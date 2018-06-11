@@ -37,8 +37,6 @@ namespace HelpCenter.Models
 
         public DateTime? ExpectedCompletionDateTime { get; set; }
 
-        public double? AccountCharge { get; set; }
-
 
     }
 }
