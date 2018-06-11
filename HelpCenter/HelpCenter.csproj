@@ -206,12 +206,17 @@
     <Compile Include="Migrations\201806112021345_InitialSetup.Designer.cs">
       <DependentUpon>201806112021345_InitialSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806112033004_SeedAspNetRoles.cs" />
+    <Compile Include="Migrations\201806112033004_SeedAspNetRoles.Designer.cs">
+      <DependentUpon>201806112033004_SeedAspNetRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LeaseHolder.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -300,6 +305,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201806112021345_InitialSetup.resx">
       <DependentUpon>201806112021345_InitialSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806112033004_SeedAspNetRoles.resx">
+      <DependentUpon>201806112033004_SeedAspNetRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
