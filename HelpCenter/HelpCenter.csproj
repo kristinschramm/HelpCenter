@@ -208,6 +208,7 @@
     <Compile Include="Models\LeaseHolder.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WorkOrder.cs" />
