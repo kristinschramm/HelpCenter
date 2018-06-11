@@ -20,7 +20,7 @@ namespace HelpCenter.Models
         public DateTime StatusDateTime { get; set; }
 
         public string RequestorId { get; set; }
-        public User Requestor { get; set; }
+        public AppUser Requestor { get; set; }
 
         public int? LocationId { get; set; }
         public Location Location { get; set; }
@@ -29,7 +29,7 @@ namespace HelpCenter.Models
         public Unit Unit { get; set; }
 
         public string AssignedUserId { get; set; }
-        public User AssignedUser { get; set; }
+        public AppUser AssignedUser { get; set; }
 
         public DateTime CreateDateTime { get; set; }
 

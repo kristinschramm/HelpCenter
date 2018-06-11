@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HelpCenter.Models
 {
-    public class User
+    public class AppUser
     {
         public string Id { get; set; }
 

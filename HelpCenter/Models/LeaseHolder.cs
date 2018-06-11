@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HelpCenter.Models
 {
-    public class LeaseHolder : User
+    public class LeaseHolder : AppUser
     {
         public int LocationId { get; set; }
         public Location Location { get; set; }
