@@ -100,10 +100,20 @@ namespace HelpCenter.Controllers
         public ActionResult Edit (int id, WorkOrder workOrder)
         {
             var workOrderInDb = _context.WorkOrders.Single(w => w.Id == id);
+            var sendStatusEmail = false;
 
-            workOrderInDb.AssignedUserId = workOrder.AssignedUserId;
+            if(workOrderInDb.AssignedUserId != workOrder.AssignedUserId)
+            {
+                workOrderInDb.AssignedUserId = workOrder.AssignedUserId;
+                sendStatusEmail = true;
+            }
             workOrderInDb.CategoryId = workOrder.CategoryId;
-            workOrderInDb.ExpectedCompletionDateTime = workOrder.ExpectedCompletionDateTime;
+            if(workOrderInDb.ExpectedCompletionDateTime != workOrder.ExpectedCompletionDateTime)
+            {
+                workOrderInDb.ExpectedCompletionDateTime = workOrder.ExpectedCompletionDateTime;
+                sendStatusEmail = true;
+            }
+            
             workOrderInDb.LocationId = workOrder.LocationId;
             workOrderInDb.ModifiedDateTime = DateTime.Now;
             workOrderInDb.RequestorId = workOrder.RequestorId;
@@ -111,11 +121,17 @@ namespace HelpCenter.Controllers
             {
                 workOrderInDb.StatusId = workOrder.StatusId;
                 workOrderInDb.StatusDateTime = DateTime.Now;
+                sendStatusEmail = true;
             }
             workOrderInDb.Subject = workOrder.Subject;
             workOrderInDb.UnitId = workOrder.UnitId;
 
             _context.SaveChanges();
+
+            if (sendStatusEmail)
+            {
+                // Send Email Here
+            }
 
             return RedirectToAction("Index");
         }
