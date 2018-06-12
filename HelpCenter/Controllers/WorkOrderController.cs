@@ -72,7 +72,14 @@ namespace HelpCenter.Controllers
             {
                 if(User.Identity.GetUserId() == workOrder.RequestorId)
                 {
-                    return View(workOrder);
+                    var comments = _context.WorkOrderComments.Where(w => w.WorkOrderId == id).ToList();
+                    var viewModel = new WorkOrderViewModel()
+                    {
+                        WorkOrder = workOrder,
+                        Comments = comments
+                    };
+
+                    return View(viewModel);
                 }
                 else
                 {
@@ -81,7 +88,13 @@ namespace HelpCenter.Controllers
             }
             else if(User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
             {
-                return View(workOrder);
+                var comments = _context.WorkOrderComments.Where(w => w.WorkOrderId == id).ToList();
+                var viewModel = new WorkOrderViewModel()
+                {
+                    WorkOrder = workOrder,
+                    Comments = comments
+                };
+                return View(viewModel);
             }
 
             return RedirectToAction("Index", "Home");

@@ -233,6 +233,7 @@
     <Compile Include="Models\WorkOrderCategory.cs" />
     <Compile Include="Models\WorkOrderComment.cs" />
     <Compile Include="Models\WorkOrderStatus.cs" />
+    <Compile Include="Models\WorkOrderViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
