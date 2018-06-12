@@ -37,8 +37,6 @@ namespace HelpCenter.Controllers
                     .Include(w => w.Status)
                     .Where(w => w.RequestorId == userId)
                     .ToList();
-
-                return View(workOrders);
             }
             else if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
             {
@@ -50,11 +48,13 @@ namespace HelpCenter.Controllers
                     .Include(w => w.Requestor)
                     .Include(w => w.Status)
                     .ToList();
-
-                return View(workOrders);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("Index", "Home");
+            return View(workOrders);
         }
 
         public ActionResult Details (int id)
@@ -149,9 +149,70 @@ namespace HelpCenter.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Status(string id)
+        {
+            var status = id;
+
+            List<WorkOrder> workOrders;
+            if (User.IsInRole(RoleName.LeaseHolder))
+            {
+                var userId = User.Identity.GetUserId();
+
+                workOrders = _context.WorkOrders
+                .Include(w => w.AssignedUser)
+                .Include(w => w.Category)
+                .Include(w => w.Location)
+                .Include(w => w.Requestor)
+                .Include(w => w.Status)
+                .Include(w => w.Unit)
+                .Where(w => w.Status.Name == status.ToUpper() && w.RequestorId == userId)
+                .OrderByDescending(w => w.CreateDateTime)
+                .ToList();
+            }
+            else if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+            {
+                workOrders = _context.WorkOrders
+                .Include(w => w.AssignedUser)
+                .Include(w => w.Category)
+                .Include(w => w.Location)
+                .Include(w => w.Requestor)
+                .Include(w => w.Status)
+                .Include(w => w.Unit)
+                .Where(w => w.Status.Name == status.ToUpper())
+                .OrderByDescending(w => w.CreateDateTime)
+                .ToList();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
+            return View("Index", workOrders);
+        }
+
         public ActionResult Open()
         {
-            var workOrders = _context.WorkOrders
+            List<WorkOrder> workOrders;
+            if (User.IsInRole(RoleName.LeaseHolder))
+            {
+                var userId = User.Identity.GetUserId();
+
+                workOrders = _context.WorkOrders
+                .Include(w => w.AssignedUser)
+                .Include(w => w.Category)
+                .Include(w => w.Location)
+                .Include(w => w.Requestor)
+                .Include(w => w.Status)
+                .Include(w => w.Unit)
+                .Where(w => w.Status.IsOpen == true && w.RequestorId == userId)
+                .OrderByDescending(w => w.ModifiedDateTime)
+                .ThenByDescending(w => w.CreateDateTime)
+                .ToList();
+            }
+            else if(User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+            {
+                workOrders = _context.WorkOrders
                 .Include(w => w.AssignedUser)
                 .Include(w => w.Category)
                 .Include(w => w.Location)
@@ -162,6 +223,12 @@ namespace HelpCenter.Controllers
                 .OrderByDescending(w => w.ModifiedDateTime)
                 .ThenByDescending(w => w.CreateDateTime)
                 .ToList();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
 
             return View("Index", workOrders);
         }
