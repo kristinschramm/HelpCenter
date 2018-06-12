@@ -148,5 +148,22 @@ namespace HelpCenter.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Open()
+        {
+            var workOrders = _context.WorkOrders
+                .Include(w => w.AssignedUser)
+                .Include(w => w.Category)
+                .Include(w => w.Location)
+                .Include(w => w.Requestor)
+                .Include(w => w.Status)
+                .Include(w => w.Unit)
+                .Where(w => w.Status.IsOpen == true)
+                .OrderByDescending(w => w.ModifiedDateTime)
+                .ThenByDescending(w => w.CreateDateTime)
+                .ToList();
+
+            return View("Index", workOrders);
+        }
     }
 }
