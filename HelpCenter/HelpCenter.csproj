@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WorkOrderController.cs" />
@@ -218,6 +219,10 @@
     <Compile Include="Migrations\201806121450293_CreatedWorkOrderComments.cs" />
     <Compile Include="Migrations\201806121450293_CreatedWorkOrderComments.Designer.cs">
       <DependentUpon>201806121450293_CreatedWorkOrderComments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806121549408_UpdateAppUserIncludeNameFields.cs" />
+    <Compile Include="Migrations\201806121549408_UpdateAppUserIncludeNameFields.Designer.cs">
+      <DependentUpon>201806121549408_UpdateAppUserIncludeNameFields.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -537,7 +542,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AppUser\" />
     <Folder Include="Views\Employees\" />
+    <Folder Include="Views\Employee\" />
     <Folder Include="Views\LeaseHolders\" />
     <Folder Include="Views\WorkOrders\" />
   </ItemGroup>
@@ -566,6 +573,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806121450293_CreatedWorkOrderComments.resx">
       <DependentUpon>201806121450293_CreatedWorkOrderComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806121549408_UpdateAppUserIncludeNameFields.resx">
+      <DependentUpon>201806121549408_UpdateAppUserIncludeNameFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
