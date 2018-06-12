@@ -9,6 +9,7 @@ using System.Data.Entity;
 
 namespace HelpCenter.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         private ApplicationDbContext _context;
@@ -27,13 +28,22 @@ namespace HelpCenter.Controllers
 
             return View(employees);
         }
+        
+        public ActionResult Detail (string id)
+        {
+            var employee = _context.AppUsers.Single(e => e.Id == id);
+            return View(employee);
+        }
 
+        [Authorize(Roles = RoleName.Manager)]
         public ActionResult Edit (string id)
         {
             var employee = _context.AppUsers.Single(e => e.Id == id);
             return View(employee);
         }
 
+        [HttpPost]
+        [Authorize(Roles = RoleName.Manager)]
         public ActionResult Edit (string id, AppUser employee)
         {
             var employeeInDb = _context.AppUsers.Single(e => e.Id == id);
@@ -44,6 +54,11 @@ namespace HelpCenter.Controllers
                 employeeInDb.EmailAddress = employee.EmailAddress;
                 aspNetUser.Email = employeeInDb.EmailAddress;
             }
+            employeeInDb.NameFirst = employee.NameFirst;
+            employeeInDb.NameLast = employee.NameLast;
+            employeeInDb.PhoneNumber = employee.PhoneNumber;
+
+            _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
