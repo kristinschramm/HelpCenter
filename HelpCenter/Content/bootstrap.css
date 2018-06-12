@@ -6071,23 +6071,25 @@ a.badge:focus {
     margin-left: 3px;
 }
 
-.jumbotron {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    margin-bottom: 30px;
-    color: inherit;
-    background-color: #eeeeee;
-}
+ .jumbotron
 
+{
+    height: 300px;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    
+}
     .jumbotron h1,
     .jumbotron .h1 {
         color: inherit;
+        vertical-align:text-bottom;
     }
 
     .jumbotron p {
         margin-bottom: 15px;
         font-size: 21px;
         font-weight: 200;
+        color: midnightblue;
     }
 
     .jumbotron > hr {
@@ -6097,6 +6099,7 @@ a.badge:focus {
 .container .jumbotron,
 .container-fluid .jumbotron {
     border-radius: 6px;
+    position: relative;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -6120,6 +6123,11 @@ a.badge:focus {
     .jumbotron h1,
     .jumbotron .h1 {
         font-size: 63px;
+        color: white;
+    }
+    .jumbotron h2,
+    .jumbotron .h2 {
+        color: white;
     }
 }
 
