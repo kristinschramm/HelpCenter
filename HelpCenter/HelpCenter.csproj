@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LeaseHolderController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Global.asax.cs">
@@ -542,13 +543,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-
     <Folder Include="Content\Images\" />
-
     <Folder Include="Views\AppUser\" />
     <Folder Include="Views\Employees\" />
     <Folder Include="Views\Employee\" />
     <Folder Include="Views\LeaseHolders\" />
+    <Folder Include="Views\LeaseHolder\" />
     <Folder Include="Views\WorkOrders\" />
   </ItemGroup>
   <ItemGroup>
