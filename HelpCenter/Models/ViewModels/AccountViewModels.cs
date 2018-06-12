@@ -62,7 +62,7 @@ namespace HelpCenter.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
+    public class RegisterLeaseHolderViewModel
     {
         [Required]
         [EmailAddress]
@@ -79,6 +79,34 @@ namespace HelpCenter.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public int LocationId { get; set; }
+        public Location Location { get; set; }
+
+        public IEnumerable<Location> LocationsList { get; set; }
+
+        public int UnitId { get; set; }
+        public Unit Unit { get; set; }
+        [Required]
+        public string NameFirst { get; set; }
+        [Required]
+        public string NameLast { get; set; }
+
+        public string NameFirstLast
+        {
+            get { return NameFirst + " " + NameLast; }
+        }
+
+        public string NameLastFirst
+        {
+            get { return NameLast + ", " + NameFirst; }
+        }
+
+        public string PhoneNumber { get; set; }
+
+        public string EmailAddress { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel
@@ -100,6 +128,9 @@ namespace HelpCenter.Models
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
+
+
+
     }
 
     public class ForgotPasswordViewModel
