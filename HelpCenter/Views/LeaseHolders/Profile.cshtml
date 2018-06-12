@@ -1,0 +1,24 @@
+﻿@model HelpCenter.Models.RegisterLeaseHolderViewModel
+    @{
+        ViewBag.Title = Model.NameFirst + " " + Model.NameLast + " - Customer Details";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Customer Details</h2>
+    <p>@Html.ActionLink("Edit", "Edit", "LeaseHolder", new { id = Model.Id }, new { @class = "btn btn-default" }) </p>
+    <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>@Model.NameFirstLast</dd>
+        <dt>Phone</dt>
+        <dd>@Model.</dd>
+        <dt>Location</dt>
+        <dd>@Model.Location.Name</dd>
+        <dt>Unit</dt>
+        <dd>@Model.Unit.Number</dd>
+        <dt>Address</dt>
+        <dd>
+            @Model.Location.Address 
+            @Model.Location.City, @Model.Location.State @Model.Location.Zip
+            <div id="map" onload="initialize()"></div>
+        </dd>
+    </dl>

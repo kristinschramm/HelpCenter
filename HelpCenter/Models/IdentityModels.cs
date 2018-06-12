@@ -21,12 +21,13 @@ namespace HelpCenter.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<WorkOrderStatus> WorkOrderStatus { get; set; }
+        public DbSet<WorkOrderComment> WorkOrderComments { get; set; }
         public DbSet<WorkOrderCategory> WorkOrderCategories { get; set; }
         public DbSet<WorkOrder> WorkOrders { get; set;}
         public DbSet <AppUser> AppUsers { get; set; }
         public DbSet <Unit> Units { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Location> Loctions { get; set; }
+        public DbSet<Location> Locations { get; set; }
         public DbSet<LeaseHolder> LeaseHolders { get; set; }
 
 

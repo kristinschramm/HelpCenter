@@ -17,6 +17,7 @@ namespace HelpCenter.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
@@ -139,7 +140,10 @@ namespace HelpCenter.Controllers
         [AllowAnonymous]
         public ActionResult RegisterLeaseHolder()
         {
-            return View();
+            _context = new ApplicationDbContext();
+            var viewModel = new RegisterLeaseHolderViewModel();
+            viewModel.LocationsList = _context.Locations.ToList();
+            return View(viewModel);
         }
 
         //
@@ -147,7 +151,7 @@ namespace HelpCenter.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterLeaseHolder(RegisterViewModel model)
+        public async Task<ActionResult> RegisterLeaseHolder(RegisterLeaseHolderViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -192,7 +196,7 @@ namespace HelpCenter.Controllers
         [HttpPost]
         [Authorize(Roles = RoleName.Manager)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterEmployee(RegisterViewModel model)
+        public async Task<ActionResult> RegisterEmployee(RegisterLeaseHolderViewModel model)
         {
             if (ModelState.IsValid)
             {
