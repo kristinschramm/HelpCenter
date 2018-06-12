@@ -10,5 +10,6 @@ namespace HelpCenter.Models
         public const string Manager = "Manager";
         public const string Technician = "Technician";
         public const string LeaseHolder = "LeaseHolder";
+        public const string EmployeeRoles = Manager + ", " + Technician;
     }
 }
