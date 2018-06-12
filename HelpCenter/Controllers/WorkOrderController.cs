@@ -37,8 +37,10 @@ namespace HelpCenter.Controllers
                     .Include(w => w.Status)
                     .Where(w => w.RequestorId == userId)
                     .ToList();
+
+                return View(workOrders);
             }
-            else
+            else if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
             {
                 workOrders = _context.WorkOrders
                     .Include(w => w.AssignedUser)
@@ -48,9 +50,41 @@ namespace HelpCenter.Controllers
                     .Include(w => w.Requestor)
                     .Include(w => w.Status)
                     .ToList();
+
+                return View(workOrders);
             }
 
-            return View(workOrders);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Details (int id)
+        {
+            var workOrder = _context.WorkOrders
+                .Include(w => w.AssignedUser)
+                .Include(w => w.Category)
+                .Include(w => w.Location)
+                .Include(w => w.Requestor)
+                .Include(w => w.Status)
+                .Include(w => w.Unit)
+                .Single(w => w.Id == id);
+
+            if (User.IsInRole(RoleName.LeaseHolder))
+            {
+                if(User.Identity.GetUserId() == workOrder.RequestorId)
+                {
+                    return View(workOrder);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            else if(User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+            {
+                return View(workOrder);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize(Roles = RoleName.EmployeeRoles)]
