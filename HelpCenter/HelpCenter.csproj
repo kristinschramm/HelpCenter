@@ -225,6 +225,10 @@
     <Compile Include="Migrations\201806121549408_UpdateAppUserIncludeNameFields.Designer.cs">
       <DependentUpon>201806121549408_UpdateAppUserIncludeNameFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806121634595_SeedWorkOrderStatus.cs" />
+    <Compile Include="Migrations\201806121634595_SeedWorkOrderStatus.Designer.cs">
+      <DependentUpon>201806121634595_SeedWorkOrderStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -579,6 +583,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806121549408_UpdateAppUserIncludeNameFields.resx">
       <DependentUpon>201806121549408_UpdateAppUserIncludeNameFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806121634595_SeedWorkOrderStatus.resx">
+      <DependentUpon>201806121634595_SeedWorkOrderStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
