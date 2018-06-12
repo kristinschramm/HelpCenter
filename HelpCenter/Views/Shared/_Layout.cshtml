@@ -23,30 +23,35 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    
+
                     @if (User.IsInRole(RoleName.LeaseHolder))
                     {
                         <li>@Html.ActionLink("Profile", "Edit", "AppUser")</li>
+                        <li>@Html.ActionLink("Work Orders", "View", "WorkOrder")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     }
                     @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
                     {
                         <li>@Html.ActionLink("Tenant Directory", "ViewAll", "LeaseHolder")</li>
                         <li>@Html.ActionLink("Employee Directory", "ViewAll", "AppUser")</li>
-                    }
-                    @if (User.IsInRole(RoleName.Technician))
-                    {
+                        <li>@Html.ActionLink("Work Orders", "View", "WorkOrder")</li>
                         <li>@Html.ActionLink("Profile", "Edit", "AppUser")</li>
-                        <li>@Html.ActionLink("Routes", "Route", "WorkOrder")</li>
                     }
-                    else {
+
+                    else
+                    {
                         <li>@Html.ActionLink("Create Account", "Create", "LeaseHolder")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     }
-                    <li>@Html.ActionLink("Work Orders", "View", "WorkOrder")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                   
+
+
+
                 </ul>
+                
                 @Html.Partial("_LoginPartial")
+                
+
             </div>
         </div>
     </div>
