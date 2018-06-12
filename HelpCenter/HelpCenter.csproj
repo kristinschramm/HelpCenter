@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -241,9 +242,25 @@
     </Compile>
     <Compile Include="GmailRetrieval.cs" />
     <Compile Include="Ignored\APIKeys.cs" />
-    <Compile Include="Migrations\201806122017019_Initial.cs" />
-    <Compile Include="Migrations\201806122017019_Initial.Designer.cs">
-      <DependentUpon>201806122017019_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201806122030286_InitialSetup.cs" />
+    <Compile Include="Migrations\201806122030286_InitialSetup.Designer.cs">
+      <DependentUpon>201806122030286_InitialSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806122032087_SeedAspNetRoles.cs" />
+    <Compile Include="Migrations\201806122032087_SeedAspNetRoles.Designer.cs">
+      <DependentUpon>201806122032087_SeedAspNetRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806122033034_SeedManagerUser.cs" />
+    <Compile Include="Migrations\201806122033034_SeedManagerUser.Designer.cs">
+      <DependentUpon>201806122033034_SeedManagerUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806122034093_SeedWorkOrderStatus.cs" />
+    <Compile Include="Migrations\201806122034093_SeedWorkOrderStatus.Designer.cs">
+      <DependentUpon>201806122034093_SeedWorkOrderStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806122034491_SeedLocations.cs" />
+    <Compile Include="Migrations\201806122034491_SeedLocations.Designer.cs">
+      <DependentUpon>201806122034491_SeedLocations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
@@ -586,8 +603,20 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806122017019_Initial.resx">
-      <DependentUpon>201806122017019_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806122030286_InitialSetup.resx">
+      <DependentUpon>201806122030286_InitialSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806122032087_SeedAspNetRoles.resx">
+      <DependentUpon>201806122032087_SeedAspNetRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806122033034_SeedManagerUser.resx">
+      <DependentUpon>201806122033034_SeedManagerUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806122034093_SeedWorkOrderStatus.resx">
+      <DependentUpon>201806122034093_SeedWorkOrderStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806122034491_SeedLocations.resx">
+      <DependentUpon>201806122034491_SeedLocations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
