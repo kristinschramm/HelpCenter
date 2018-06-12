@@ -19,7 +19,6 @@ namespace HelpCenter.Controllers
             _context = new ApplicationDbContext();
         }
 
-        [Authorize]
         // GET: WorkOrder
         public ActionResult Index()
         {
@@ -52,6 +51,39 @@ namespace HelpCenter.Controllers
             }
 
             return View(workOrders);
+        }
+
+        [Authorize(Roles = RoleName.EmployeeRoles)]
+        public ActionResult Edit (int id)
+        {
+            var workOrder = _context.WorkOrders.Single(w => w.Id == id);
+
+            return View(workOrder);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = RoleName.EmployeeRoles)]
+        public ActionResult Edit (int id, WorkOrder workOrder)
+        {
+            var workOrderInDb = _context.WorkOrders.Single(w => w.Id == id);
+
+            workOrderInDb.AssignedUserId = workOrder.AssignedUserId;
+            workOrderInDb.CategoryId = workOrder.CategoryId;
+            workOrderInDb.ExpectedCompletionDateTime = workOrder.ExpectedCompletionDateTime;
+            workOrderInDb.LocationId = workOrder.LocationId;
+            workOrderInDb.ModifiedDateTime = DateTime.Now;
+            workOrderInDb.RequestorId = workOrder.RequestorId;
+            if(workOrderInDb.StatusId != workOrder.StatusId)
+            {
+                workOrderInDb.StatusId = workOrder.StatusId;
+                workOrderInDb.StatusDateTime = DateTime.Now;
+            }
+            workOrderInDb.Subject = workOrder.Subject;
+            workOrderInDb.UnitId = workOrder.UnitId;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
