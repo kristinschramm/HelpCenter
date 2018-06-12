@@ -226,21 +226,18 @@
     <Compile Include="Migrations\201806121549408_UpdateAppUserIncludeNameFields.Designer.cs">
       <DependentUpon>201806121549408_UpdateAppUserIncludeNameFields.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\201806121637433_populate locations.cs" />
     <Compile Include="Migrations\201806121637433_populate locations.Designer.cs">
       <DependentUpon>201806121637433_populate locations.cs</DependentUpon>
-</Compile>
+    </Compile>
     <Compile Include="Migrations\201806121634595_SeedWorkOrderStatus.cs" />
     <Compile Include="Migrations\201806121634595_SeedWorkOrderStatus.Designer.cs">
       <DependentUpon>201806121634595_SeedWorkOrderStatus.cs</DependentUpon>
-
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LeaseHolder.cs" />
-    <Compile Include="Models\ViewModels\LeaseHolderViewModel.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\RoleName.cs" />
@@ -560,7 +557,6 @@
     <Folder Include="Views\AppUser\" />
     <Folder Include="Views\Employees\" />
     <Folder Include="Views\Employee\" />
-    <Folder Include="Views\LeaseHolders\" />
     <Folder Include="Views\LeaseHolder\" />
     <Folder Include="Views\Location\" />
     <Folder Include="Views\WorkOrders\" />
@@ -594,13 +590,11 @@
     <EmbeddedResource Include="Migrations\201806121549408_UpdateAppUserIncludeNameFields.resx">
       <DependentUpon>201806121549408_UpdateAppUserIncludeNameFields.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201806121637433_populate locations.resx">
       <DependentUpon>201806121637433_populate locations.cs</DependentUpon>
-</EmbeddedResource>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806121634595_SeedWorkOrderStatus.resx">
       <DependentUpon>201806121634595_SeedWorkOrderStatus.cs</DependentUpon>
-
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -80,32 +80,23 @@ namespace HelpCenter.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        public IEnumerable<Location> LocationsList { get; set; }
+        [Display(Name = "Location")]
         public int LocationId { get; set; }
         public Location Location { get; set; }
 
-        public IEnumerable<Location> LocationsList { get; set; }
-
+        [Display(Name = "Unit Number")]
         public int UnitId { get; set; }
         public Unit Unit { get; set; }
         [Required]
+        [Display(Name = "First Name")]
         public string NameFirst { get; set; }
         [Required]
+        [Display(Name = "Last Name")]
         public string NameLast { get; set; }
-
-        public string NameFirstLast
-        {
-            get { return NameFirst + " " + NameLast; }
-        }
-
-        public string NameLastFirst
-        {
-            get { return NameLast + ", " + NameFirst; }
-        }
+        [Display(Name = "Phone Number")]
 
         public string PhoneNumber { get; set; }
-
-        public string EmailAddress { get; set; }
-
 
     }
 
