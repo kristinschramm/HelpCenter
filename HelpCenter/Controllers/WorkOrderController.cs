@@ -57,6 +57,48 @@ namespace HelpCenter.Controllers
             return View(workOrders);
         }
 
+        public ActionResult Closed()
+        {
+            List<WorkOrder> workOrders;
+            if (User.IsInRole(RoleName.LeaseHolder))
+            {
+                var userId = User.Identity.GetUserId();
+
+                workOrders = _context.WorkOrders
+                .Include(w => w.AssignedUser)
+                .Include(w => w.Category)
+                .Include(w => w.Location)
+                .Include(w => w.Requestor)
+                .Include(w => w.Status)
+                .Include(w => w.Unit)
+                .Where(w => w.Status.IsOpen == false && w.RequestorId == userId)
+                .OrderByDescending(w => w.ModifiedDateTime)
+                .ThenByDescending(w => w.CreateDateTime)
+                .ToList();
+            }
+            else if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+            {
+                workOrders = _context.WorkOrders
+                .Include(w => w.AssignedUser)
+                .Include(w => w.Category)
+                .Include(w => w.Location)
+                .Include(w => w.Requestor)
+                .Include(w => w.Status)
+                .Include(w => w.Unit)
+                .Where(w => w.Status.IsOpen == false)
+                .OrderByDescending(w => w.ModifiedDateTime)
+                .ThenByDescending(w => w.CreateDateTime)
+                .ToList();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
+            return View("Index", workOrders);
+        }
+
         public ActionResult Details (int id)
         {
             var workOrder = _context.WorkOrders
