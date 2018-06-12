@@ -210,6 +210,10 @@
     <Compile Include="Migrations\201806112033004_SeedAspNetRoles.Designer.cs">
       <DependentUpon>201806112033004_SeedAspNetRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806121227009_SeedManagerUser.cs" />
+    <Compile Include="Migrations\201806121227009_SeedManagerUser.Designer.cs">
+      <DependentUpon>201806121227009_SeedManagerUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -549,6 +553,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806112033004_SeedAspNetRoles.resx">
       <DependentUpon>201806112033004_SeedAspNetRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806121227009_SeedManagerUser.resx">
+      <DependentUpon>201806121227009_SeedManagerUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
