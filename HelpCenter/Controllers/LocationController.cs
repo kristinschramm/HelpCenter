@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HelpCenter.Models;
+using System.Data.Entity;
 
 namespace HelpCenter.Controllers
 {
@@ -19,6 +20,9 @@ namespace HelpCenter.Controllers
         // GET: Location
         public ActionResult Index()
         {
+            var locations = _context.Locations
+                .OrderBy(l => l.Name)
+                .ToList();
             return View();
         }
     }
