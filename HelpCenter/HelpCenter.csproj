@@ -198,6 +198,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LeaseHolderController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Global.asax.cs">
@@ -224,9 +226,15 @@
     <Compile Include="Migrations\201806121549408_UpdateAppUserIncludeNameFields.Designer.cs">
       <DependentUpon>201806121549408_UpdateAppUserIncludeNameFields.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201806121637433_populate locations.cs" />
     <Compile Include="Migrations\201806121637433_populate locations.Designer.cs">
       <DependentUpon>201806121637433_populate locations.cs</DependentUpon>
+</Compile>
+    <Compile Include="Migrations\201806121634595_SeedWorkOrderStatus.cs" />
+    <Compile Include="Migrations\201806121634595_SeedWorkOrderStatus.Designer.cs">
+      <DependentUpon>201806121634595_SeedWorkOrderStatus.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
@@ -551,6 +559,10 @@
     <Folder Include="Content\Images\" />
     <Folder Include="Views\AppUser\" />
     <Folder Include="Views\Employees\" />
+    <Folder Include="Views\Employee\" />
+    <Folder Include="Views\LeaseHolders\" />
+    <Folder Include="Views\LeaseHolder\" />
+    <Folder Include="Views\Location\" />
     <Folder Include="Views\WorkOrders\" />
   </ItemGroup>
   <ItemGroup>
@@ -582,8 +594,13 @@
     <EmbeddedResource Include="Migrations\201806121549408_UpdateAppUserIncludeNameFields.resx">
       <DependentUpon>201806121549408_UpdateAppUserIncludeNameFields.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201806121637433_populate locations.resx">
       <DependentUpon>201806121637433_populate locations.cs</DependentUpon>
+</EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806121634595_SeedWorkOrderStatus.resx">
+      <DependentUpon>201806121634595_SeedWorkOrderStatus.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
