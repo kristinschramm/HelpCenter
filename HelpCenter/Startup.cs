@@ -10,6 +10,7 @@ namespace HelpCenter
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            GmailRetrieval.GmailStart();
         }
     }
 }

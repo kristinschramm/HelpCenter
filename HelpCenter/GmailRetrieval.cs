@@ -20,11 +20,11 @@ namespace HelpCenter
         static string[] Scopes = { GmailService.Scope.GmailReadonly };
         static string ApplicationName = "Gmail API .NET Quickstart";
 
-        static void Main(string[] args)
+        public static void GmailStart()
         {
             UserCredential credential;
             using (var stream =
-              new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
+              new FileStream("C:\\Users\\cklos\\source\\repos\\HelpCenter\\HelpCenter\\client_secret.json", FileMode.Open, FileAccess.Read))
             {
                 string credPath = Environment.GetFolderPath(
                 Environment.SpecialFolder.Personal);
