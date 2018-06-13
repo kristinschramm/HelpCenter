@@ -1,24 +1,26 @@
 ﻿@model HelpCenter.Models.ViewModels.LeaseHolderViewModel
     @{
-        ViewBag.Title = Model.NameFirst + " " + Model.NameLast + " - Customer Details";
+        ViewBag.Title = Model.LeaseHolder.NameFirst + " " + Model.LeaseHolder.NameLast + " - Customer Details";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
 
     <h2>Customer Details</h2>
-    <p>@Html.ActionLink("Edit", "Edit", "LeaseHolder", new { id = Model. }, new { @class = "btn btn-default" }) </p>
+    <p>@Html.ActionLink("Edit", "Edit", "LeaseHolder", new { id = Model.LeaseHolder.Id}, new { @class = "btn btn-default" }) </p>
     <dl class="dl-horizontal">
         <dt>Name</dt>
-        <dd>@Model.NameFirstLast</dd>
+        <dd>@Model.LeaseHolder.NameFirstLast</dd>
         <dt>Phone</dt>
-        <dd>@Model.</dd>
+        <dd>@Model.LeaseHolder.PhoneNumber</dd>
+        <dt>Email</dt>
+        <dd>@Model.LeaseHolder.EmailAddress</dd>
         <dt>Location</dt>
-        <dd>@Model.Location.Name</dd>
+        <dd>@Model.LeaseHolder.Location.Name</dd>
         <dt>Unit</dt>
-        <dd>@Model.Unit.Number</dd>
+        <dd>@Model.LeaseHolder.Unit.Number</dd>
         <dt>Address</dt>
         <dd>
-            @Model.Location.Address 
-            @Model.Location.City, @Model.Location.State @Model.Location.Zip
-            <div id="map" onload="initialize()"></div>
-        </dd>
+            @Model.LeaseHolder.Location.Address 
+            @Model.LeaseHolder.Location.City, @Model.LeaseHolder.Location.State @Model.LeaseHolder.Location.Zip           
+        </dd>        
+        @*Include location google map next to table and open work orders under*@
     </dl>

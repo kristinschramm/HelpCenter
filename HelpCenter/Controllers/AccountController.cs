@@ -21,6 +21,7 @@ namespace HelpCenter.Controllers
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -162,7 +163,7 @@ namespace HelpCenter.Controllers
                 {
                     result = await UserManager.AddToRoleAsync(user.Id, RoleName.LeaseHolder);
                 }
-                    
+
 
                 if (result.Succeeded)
                 {
@@ -209,7 +210,7 @@ namespace HelpCenter.Controllers
         [HttpPost]
         [Authorize(Roles = RoleName.Manager)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterEmployee(RegisterLeaseHolderViewModel model)
+        public async Task<ActionResult> RegisterEmployee(RegisterEmployeeViewModel model)
         {
             if (ModelState.IsValid)
             {

@@ -588,11 +588,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\LeaseHolder\Details.cshtml" />
     <Content Include="Views\LeaseHolder\Index.cshtml" />
+    <Content Include="Views\LeaseHolder\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Views\AppUser\" />
     <Folder Include="Views\Employee\" />
     <Folder Include="Views\Location\" />
     <Folder Include="Views\WorkOrder\" />

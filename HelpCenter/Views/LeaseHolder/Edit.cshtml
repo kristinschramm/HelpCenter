@@ -1,0 +1,36 @@
+﻿@model HelpCenter.Models.ViewModels.LeaseHolderViewModel
+@{ ViewBag.Title = Model.NameFirst + " " + Model.NameLast + " - User Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Profile</h2>
+<p>@Html.ActionLink("Account Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</p>
+
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Edit", "LeaseHolder", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+    <div class="form-group">
+        @Html.LabelFor(l => l.NameFirst, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(l => l.NameFirst, new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(l => l.NameLast, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(l => l.NameLast, new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(l => l.PhoneNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(l => l.PhoneNumber, new { @class = "form-control" })
+        </div>
+        @Html.LabelFor(l => l.LocationId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(l => l.LocationId, new SelectList(Model.LocationsList, "Id", "Name"), "Select Location", new { @class = "form-control" });
+        </div>
+        @Html.LabelFor(l=> l.UnitId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(l => l.Unit.Number, new { @class = "form-control" })
+        </div>
+    </div>
+}
