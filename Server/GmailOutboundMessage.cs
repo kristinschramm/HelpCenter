@@ -14,21 +14,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 
-namespace Server
+namespace HelpCenter
 {
     public class GmailOutboundMessage
     {
 
-        public void SendIt(string requestorEmailAddress, string subject, string body)
+        public void SendIt()
         {
 
             var msg = new AE.Net.Mail.MailMessage
             {
-                Subject = subject,
-                Body = body,
+                Subject = "Your Subject",
+                Body = "Hello, World, from Gmail API!",
                 From = new MailAddress("devseleniumhelpdesk@gmail.com")
             };
-            msg.To.Add(new MailAddress(requestorEmailAddress));
+            msg.To.Add(new MailAddress("yourbuddy@gmail.com"));
             msg.ReplyTo.Add(msg.From); // Bounces without this!!
             var msgStr = new StringWriter();
             msg.Save(msgStr);
@@ -41,6 +41,7 @@ namespace Server
             {
                 Raw = Base64UrlEncode(msgStr.ToString())
             }, "me").Execute();
+            Console.WriteLine("Message ID {0} sent.", result.Id);
         }
 
         private static string Base64UrlEncode(string input)
