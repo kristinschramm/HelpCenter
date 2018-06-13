@@ -240,6 +240,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GmailRetrieval.cs" />
+    <Compile Include="GMailService.cs" />
     <Compile Include="HelpDesk.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -19,13 +19,19 @@ namespace Server
     {
         // If modifying these scopes, delete your previously saved credentials 
         // at ~/.credentials/gmail-dotnet-quickstart.json
-        static string[] Scopes = { GmailService.Scope.GmailReadonly };
-        static string ApplicationName = "Gmail API .NET Quickstart";
+        static string[] Scopes = { GmailService.Scope.MailGoogleCom };
+        private static readonly string UserName = "devseleniumhelpdesk@gmail.com";
+        private static GMailService _service;
 
-        public static void GetEmails(GmailService service)
+        public static void GetEmails()
         {
             var CRUD = new CRUD();
-            var inboxlistRequest = service.Users.Messages.List("devseleniumhelpdesk@gmail.com");
+            if (!IsGMailServiceActive())
+            {
+                SetupGMailService();
+            }
+            
+            var inboxlistRequest = _service.Service.Users.Messages.List(UserName);
             inboxlistRequest.LabelIds = "INBOX";
             inboxlistRequest.IncludeSpamTrash = false;
             //get our emails 
@@ -39,7 +45,7 @@ namespace Server
                     //loop through each email and get what fields you want...
                     foreach (var email in emailListResponse.Messages)
                     {
-                        var emailInfoRequest = service.Users.Messages.Get("devseleniumhelpdesk@gmail.com", email.Id);
+                        var emailInfoRequest = _service.Service.Users.Messages.Get(UserName, email.Id);
                         var emailInfoResponse = emailInfoRequest.Execute();
 
                         string from = "";
@@ -57,9 +63,13 @@ namespace Server
                                 {
                                     dateString = mParts.Value;
                                 }
-                                else if (mParts.Name == "From")
+                                else if (mParts.Name == "From") //Reply-To give email address without name
                                 {
                                     from = mParts.Value;
+                                    var emailAddressStart = from.IndexOf("<") + 1;
+                                    var emailAddressEnd = from.IndexOf(">");
+                                    from = from.Substring(emailAddressStart, emailAddressEnd - emailAddressStart);
+
                                 }
                                 else if (mParts.Name == "Subject")
                                 {
@@ -70,7 +80,7 @@ namespace Server
                                 {
                                     foreach (MessagePart p in emailInfoResponse.Payload.Parts)
                                     {
-                                        if (p.MimeType == "text/html")
+                                        if (p.MimeType == "text/plain")
                                         {
                                             byte[] data = FromBase64ForUrlString(p.Body.Data);
                                             decodedString = Encoding.UTF8.GetString(data);
@@ -87,39 +97,24 @@ namespace Server
                             dateTimeRecived = DateTime.Now;
                         }
                         CRUD.CreateWorkOrder(from, dateTimeRecived, subject, decodedString);
+                        DeleteEmail(email.Id);
+                        
                     }
                 }
             }
 
         }
 
-        public static void GmailStart()
+        public static void DeleteEmail (string messageId)
         {
-            UserCredential credential;
-            using (var stream =
-              new FileStream(HostingEnvironment.MapPath(@"/client_secret.json"), FileMode.Open, FileAccess.Read))
+            if (!IsGMailServiceActive())
             {
-                string credPath = Environment.GetFolderPath(
-                Environment.SpecialFolder.Personal);
-                credPath = Path.Combine(credPath, ".credentials/gmail-dotnet-quickstart.json");
-
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                  GoogleClientSecrets.Load(stream).Secrets,
-                  Scopes,
-                  "user",
-                  CancellationToken.None,
-                  new FileDataStore(credPath, true)).Result;
+                SetupGMailService();
             }
-
-            // Create Gmail API service. 
-            var service = new GmailService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-
-            GetEmails(service);
+            _service.Service.Users.Messages.Trash(UserName, messageId).Execute();
         }
+
+        
 
         public static byte[] FromBase64ForUrlString(string base64ForUrlInput)
         {
@@ -129,6 +124,16 @@ namespace Server
             result.Replace('-', '+');
             result.Replace('_', '/');
             return Convert.FromBase64String(result.ToString());
+        }
+
+        private static bool IsGMailServiceActive()
+        {
+            return _service != null;
+        }
+
+        private static void SetupGMailService()
+        {
+            _service = new GMailService();
         }
     }
 }

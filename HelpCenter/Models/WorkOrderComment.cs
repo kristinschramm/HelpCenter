@@ -16,7 +16,7 @@ namespace HelpCenter.Models
 
         public DateTime CreateDateTime { get; set; }
 
-        public int CommentorId { get; set; }
+        public string CommentorId { get; set; }
         public AppUser Commentor { get; set; }
     }
 }
