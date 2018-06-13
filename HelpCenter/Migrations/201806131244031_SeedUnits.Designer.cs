@@ -7,13 +7,13 @@ namespace HelpCenter.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class SeedLocations : IMigrationMetadata
+    public sealed partial class SeedUnits : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(SeedLocations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(SeedUnits));
         
         string IMigrationMetadata.Id
         {
-            get { return "201806122034491_SeedLocations"; }
+            get { return "201806131244031_SeedUnits"; }
         }
         
         string IMigrationMetadata.Source
