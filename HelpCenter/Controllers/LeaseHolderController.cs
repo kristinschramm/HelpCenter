@@ -33,6 +33,7 @@ namespace HelpCenter.Controllers
             {
                 var viewModels = new List<LeaseHolderViewModel>();
                 
+                
                 var leaseHolders = _context.AppUsers
                     .Where(l => l is LeaseHolder)
                     .OrderBy(l => l.NameLast)
@@ -44,7 +45,12 @@ namespace HelpCenter.Controllers
                     viewModel.LeaseHolder = (LeaseHolder)leaseHolder;
                     viewModel.OpenWorkOrderCount = _context.WorkOrders
                         .Count(w => w.RequestorId == leaseHolder.Id);
-                    viewModels.Add(viewModel);                    
+                    
+                    viewModel.Location = _context.Locations.Single(l => l.Id == viewModel.LeaseHolder.LocationId);
+
+                    viewModel.Unit = _context.Units.Single(u => u.Id == viewModel.LeaseHolder.UnitId);
+
+                    viewModels.Add(viewModel);
                 }
 
                 return View(viewModels);

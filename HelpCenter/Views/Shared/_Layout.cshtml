@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Property Management Help Center</title>
+    <title>@ViewBag.Title - Property Mangement Help Center </title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @using Microsoft.AspNet.Identity;
@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Property Management Help Center", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Property Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -26,30 +26,27 @@
 
                     @if (User.IsInRole(RoleName.LeaseHolder))
                     {
-                        <li>@Html.ActionLink("Profile", "Edit", "AppUser")</li>
+
                         <li>@Html.ActionLink("Work Orders", "View", "WorkOrder")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     }
                     @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
                     {
-                        <li>@Html.ActionLink("Tenant Directory", "ViewAll", "LeaseHolder")</li>
-                        <li>@Html.ActionLink("Employee Directory", "ViewAll", "AppUser")</li>
-                        <li>@Html.ActionLink("Work Orders", "View", "WorkOrder")</li>
-                        <li>@Html.ActionLink("Profile", "Edit", "AppUser")</li>
-                    }
+                        <li>@Html.ActionLink("Tenant Directory", "Index", "LeaseHolder")</li>
+                        <li>@Html.ActionLink("Employee Directory", "Index", "AppUser")</li>
+                        <li>@Html.ActionLink("Work Orders", "Index", "WorkOrder")</li>
 
-                    else
+                    }
+                    @if (Request.IsAuthenticated == false)
                     {
                         <li>@Html.ActionLink("Create Account", "RegisterLeaseHolder", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     }
 
 
-
                 </ul>
                 
-                @Html.Partial("_LoginPartial")
-                
+                @Html.Partial("_LoginPartial")               
 
             </div>
         </div>
