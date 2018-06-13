@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 
 namespace HelpCenter
 {
@@ -24,7 +25,7 @@ namespace HelpCenter
         {
             UserCredential credential;
             using (var stream =
-              new FileStream("C:\\Users\\cklos\\source\\repos\\HelpCenter\\HelpCenter\\client_secret.json", FileMode.Open, FileAccess.Read))
+              new FileStream(HostingEnvironment.MapPath(@"/client_secret.json"), FileMode.Open, FileAccess.Read))
             {
                 string credPath = Environment.GetFolderPath(
                 Environment.SpecialFolder.Personal);
