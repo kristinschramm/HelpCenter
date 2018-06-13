@@ -36,6 +36,9 @@ namespace Server
     partial void InsertAppUser(AppUser instance);
     partial void UpdateAppUser(AppUser instance);
     partial void DeleteAppUser(AppUser instance);
+    partial void InsertWorkOrderComment(WorkOrderComment instance);
+    partial void UpdateWorkOrderComment(WorkOrderComment instance);
+    partial void DeleteWorkOrderComment(WorkOrderComment instance);
     #endregion
 		
 		public HelpDeskDataContext() : 
@@ -83,6 +86,14 @@ namespace Server
 				return this.GetTable<AppUser>();
 			}
 		}
+		
+		public System.Data.Linq.Table<WorkOrderComment> WorkOrderComments
+		{
+			get
+			{
+				return this.GetTable<WorkOrderComment>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WorkOrders")]
@@ -114,6 +125,8 @@ namespace Server
 		private System.DateTime _ModifiedDateTime;
 		
 		private System.Nullable<System.DateTime> _ExpectedCompletionDateTime;
+		
+		private EntitySet<WorkOrderComment> _WorkOrderComments;
 		
 		private EntityRef<AppUser> _AppUser;
 		
@@ -151,6 +164,7 @@ namespace Server
 		
 		public WorkOrder()
 		{
+			this._WorkOrderComments = new EntitySet<WorkOrderComment>(new Action<WorkOrderComment>(this.attach_WorkOrderComments), new Action<WorkOrderComment>(this.detach_WorkOrderComments));
 			this._AppUser = default(EntityRef<AppUser>);
 			this._AppUser1 = default(EntityRef<AppUser>);
 			OnCreated();
@@ -404,6 +418,19 @@ namespace Server
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkOrder_WorkOrderComment", Storage="_WorkOrderComments", ThisKey="Id", OtherKey="WorkOrderId")]
+		public EntitySet<WorkOrderComment> WorkOrderComments
+		{
+			get
+			{
+				return this._WorkOrderComments;
+			}
+			set
+			{
+				this._WorkOrderComments.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AppUser_WorkOrder", Storage="_AppUser", ThisKey="AssignedUserId", OtherKey="Id", IsForeignKey=true)]
 		public AppUser AppUser
 		{
@@ -491,6 +518,18 @@ namespace Server
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_WorkOrderComments(WorkOrderComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.WorkOrder = this;
+		}
+		
+		private void detach_WorkOrderComments(WorkOrderComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.WorkOrder = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AppUsers")]
@@ -519,6 +558,8 @@ namespace Server
 		
 		private EntitySet<WorkOrder> _WorkOrders1;
 		
+		private EntitySet<WorkOrderComment> _WorkOrderComments;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -545,6 +586,7 @@ namespace Server
 		{
 			this._WorkOrders = new EntitySet<WorkOrder>(new Action<WorkOrder>(this.attach_WorkOrders), new Action<WorkOrder>(this.detach_WorkOrders));
 			this._WorkOrders1 = new EntitySet<WorkOrder>(new Action<WorkOrder>(this.attach_WorkOrders1), new Action<WorkOrder>(this.detach_WorkOrders1));
+			this._WorkOrderComments = new EntitySet<WorkOrderComment>(new Action<WorkOrderComment>(this.attach_WorkOrderComments), new Action<WorkOrderComment>(this.detach_WorkOrderComments));
 			OnCreated();
 		}
 		
@@ -734,6 +776,19 @@ namespace Server
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AppUser_WorkOrderComment", Storage="_WorkOrderComments", ThisKey="Id", OtherKey="CommentorId")]
+		public EntitySet<WorkOrderComment> WorkOrderComments
+		{
+			get
+			{
+				return this._WorkOrderComments;
+			}
+			set
+			{
+				this._WorkOrderComments.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -776,6 +831,258 @@ namespace Server
 		{
 			this.SendPropertyChanging();
 			entity.AppUser1 = null;
+		}
+		
+		private void attach_WorkOrderComments(WorkOrderComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.AppUser = this;
+		}
+		
+		private void detach_WorkOrderComments(WorkOrderComment entity)
+		{
+			this.SendPropertyChanging();
+			entity.AppUser = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WorkOrderComments")]
+	public partial class WorkOrderComment : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _WorkOrderId;
+		
+		private string _Comment;
+		
+		private System.DateTime _CreateDateTime;
+		
+		private string _CommentorId;
+		
+		private EntityRef<AppUser> _AppUser;
+		
+		private EntityRef<WorkOrder> _WorkOrder;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnWorkOrderIdChanging(int value);
+    partial void OnWorkOrderIdChanged();
+    partial void OnCommentChanging(string value);
+    partial void OnCommentChanged();
+    partial void OnCreateDateTimeChanging(System.DateTime value);
+    partial void OnCreateDateTimeChanged();
+    partial void OnCommentorIdChanging(string value);
+    partial void OnCommentorIdChanged();
+    #endregion
+		
+		public WorkOrderComment()
+		{
+			this._AppUser = default(EntityRef<AppUser>);
+			this._WorkOrder = default(EntityRef<WorkOrder>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkOrderId", DbType="Int NOT NULL")]
+		public int WorkOrderId
+		{
+			get
+			{
+				return this._WorkOrderId;
+			}
+			set
+			{
+				if ((this._WorkOrderId != value))
+				{
+					if (this._WorkOrder.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnWorkOrderIdChanging(value);
+					this.SendPropertyChanging();
+					this._WorkOrderId = value;
+					this.SendPropertyChanged("WorkOrderId");
+					this.OnWorkOrderIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comment", DbType="NVarChar(MAX)")]
+		public string Comment
+		{
+			get
+			{
+				return this._Comment;
+			}
+			set
+			{
+				if ((this._Comment != value))
+				{
+					this.OnCommentChanging(value);
+					this.SendPropertyChanging();
+					this._Comment = value;
+					this.SendPropertyChanged("Comment");
+					this.OnCommentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDateTime", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDateTime
+		{
+			get
+			{
+				return this._CreateDateTime;
+			}
+			set
+			{
+				if ((this._CreateDateTime != value))
+				{
+					this.OnCreateDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDateTime = value;
+					this.SendPropertyChanged("CreateDateTime");
+					this.OnCreateDateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommentorId", DbType="NVarChar(128)")]
+		public string CommentorId
+		{
+			get
+			{
+				return this._CommentorId;
+			}
+			set
+			{
+				if ((this._CommentorId != value))
+				{
+					if (this._AppUser.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCommentorIdChanging(value);
+					this.SendPropertyChanging();
+					this._CommentorId = value;
+					this.SendPropertyChanged("CommentorId");
+					this.OnCommentorIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AppUser_WorkOrderComment", Storage="_AppUser", ThisKey="CommentorId", OtherKey="Id", IsForeignKey=true)]
+		public AppUser AppUser
+		{
+			get
+			{
+				return this._AppUser.Entity;
+			}
+			set
+			{
+				AppUser previousValue = this._AppUser.Entity;
+				if (((previousValue != value) 
+							|| (this._AppUser.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._AppUser.Entity = null;
+						previousValue.WorkOrderComments.Remove(this);
+					}
+					this._AppUser.Entity = value;
+					if ((value != null))
+					{
+						value.WorkOrderComments.Add(this);
+						this._CommentorId = value.Id;
+					}
+					else
+					{
+						this._CommentorId = default(string);
+					}
+					this.SendPropertyChanged("AppUser");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WorkOrder_WorkOrderComment", Storage="_WorkOrder", ThisKey="WorkOrderId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		public WorkOrder WorkOrder
+		{
+			get
+			{
+				return this._WorkOrder.Entity;
+			}
+			set
+			{
+				WorkOrder previousValue = this._WorkOrder.Entity;
+				if (((previousValue != value) 
+							|| (this._WorkOrder.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WorkOrder.Entity = null;
+						previousValue.WorkOrderComments.Remove(this);
+					}
+					this._WorkOrder.Entity = value;
+					if ((value != null))
+					{
+						value.WorkOrderComments.Add(this);
+						this._WorkOrderId = value.Id;
+					}
+					else
+					{
+						this._WorkOrderId = default(int);
+					}
+					this.SendPropertyChanged("WorkOrder");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
