@@ -239,6 +239,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GmailOutboundMessage.cs" />
     <Compile Include="GmailRetrieval.cs" />
     <Compile Include="GMailService.cs" />
     <Compile Include="HelpDesk.designer.cs">

@@ -156,43 +156,50 @@ namespace HelpCenter.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
+                var unit = _context.Units.SingleOrDefault(u => u.LocationId == model.LocationId && u.Number == model.UnitInput);
+                if(unit != null)
                 {
-                    result = await UserManager.AddToRoleAsync(user.Id, RoleName.LeaseHolder);
+                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                    var result = await UserManager.CreateAsync(user, model.Password);
+
+                    if (result.Succeeded)
+                    {
+                        result = await UserManager.AddToRoleAsync(user.Id, RoleName.LeaseHolder);
+                    }
+
+
+                    if (result.Succeeded)
+                    {
+                        var leaseHolder = new LeaseHolder()
+                        {
+                            EmailAddress = model.Email,
+                            Id = user.Id,
+                            LocationId = model.LocationId,
+                            NameFirst = model.NameFirst,
+                            NameLast = model.NameLast,
+                            PhoneNumber = model.PhoneNumber,
+                            UnitId = unit.Id
+                        };
+
+                        _context.AppUsers.Add(leaseHolder);
+                        _context.SaveChanges();
+
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
                 }
-
-
-                if (result.Succeeded)
+                else
                 {
-                    var leaseHolder = new LeaseHolder();
-
-                    leaseHolder.EmailAddress = model.Email;
-                    leaseHolder.Id = user.Id;
-                    leaseHolder.LocationId = model.LocationId;
-                    leaseHolder.Location = _context.Locations.SingleOrDefault(l => l.Id == model.LocationId);
-                    leaseHolder.NameFirst = model.NameFirst;
-                    leaseHolder.NameLast = model.NameLast;
-                    leaseHolder.PhoneNumber = model.PhoneNumber;
-                    leaseHolder.UnitId = model.UnitId;
-                    leaseHolder.Unit = _context.Units.SingleOrDefault(u => u.Id == model.UnitId);
-
-                    _context.AppUsers.Add(leaseHolder);
-                    _context.SaveChanges();
-
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    ModelState.AddModelError(string.Empty, $"'{model.UnitInput}' is not a valid unit number.");
                 }
-                AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form

@@ -240,8 +240,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="GmailOutboundMessage.cs" />
-    <Compile Include="GmailRetrieval.cs" />
     <Compile Include="Ignored\APIKeys.cs" />
     <Compile Include="Migrations\201806122030286_InitialSetup.cs" />
     <Compile Include="Migrations\201806122030286_InitialSetup.Designer.cs">
@@ -271,7 +269,12 @@
     <Compile Include="Migrations\201806131558172_Models.WorkOrderComment.AppUserIdAsString.Designer.cs">
       <DependentUpon>201806131558172_Models.WorkOrderComment.AppUserIdAsString.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806132014197_CreateEmailModel.cs" />
+    <Compile Include="Migrations\201806132014197_CreateEmailModel.Designer.cs">
+      <DependentUpon>201806132014197_CreateEmailModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\EMail.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LeaseHolder.cs" />
@@ -636,6 +639,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806131558172_Models.WorkOrderComment.AppUserIdAsString.resx">
       <DependentUpon>201806131558172_Models.WorkOrderComment.AppUserIdAsString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806132014197_CreateEmailModel.resx">
+      <DependentUpon>201806132014197_CreateEmailModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

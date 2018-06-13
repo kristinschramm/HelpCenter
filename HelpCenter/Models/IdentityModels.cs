@@ -29,6 +29,7 @@ namespace HelpCenter.Models
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<LeaseHolder> LeaseHolders { get; set; }
+        public DbSet<EMail> EMails { get; set; }
 
 
         public ApplicationDbContext()
