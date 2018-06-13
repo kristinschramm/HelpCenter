@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpCenter", "HelpCenter\He
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpCenter.Tests", "HelpCenter.Tests\HelpCenter.Tests.csproj", "{947B0FFC-131A-4A3E-8119-F328B95EA02A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{3FB5CBC4-EB58-4FB3-80C7-76D1FAFF1CAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{947B0FFC-131A-4A3E-8119-F328B95EA02A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{947B0FFC-131A-4A3E-8119-F328B95EA02A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{947B0FFC-131A-4A3E-8119-F328B95EA02A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FB5CBC4-EB58-4FB3-80C7-76D1FAFF1CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FB5CBC4-EB58-4FB3-80C7-76D1FAFF1CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FB5CBC4-EB58-4FB3-80C7-76D1FAFF1CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FB5CBC4-EB58-4FB3-80C7-76D1FAFF1CAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
