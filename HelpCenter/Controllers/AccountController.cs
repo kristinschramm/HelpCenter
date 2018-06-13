@@ -166,6 +166,19 @@ namespace HelpCenter.Controllers
 
                 if (result.Succeeded)
                 {
+                    var leaseHolder = new LeaseHolder()
+                    {
+                        EmailAddress = model.Email,
+                        Id = user.Id,
+                        LocationId = model.LocationId,
+                        NameFirst = model.NameFirst,
+                        NameLast = model.NameLast,
+                        PhoneNumber = model.PhoneNumber,
+                        UnitId = model.UnitId
+                    };
+
+                    _context.LeaseHolders.Add(leaseHolder);
+                    _context.SaveChanges();
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
