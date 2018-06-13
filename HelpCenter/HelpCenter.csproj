@@ -258,9 +258,9 @@
     <Compile Include="Migrations\201806122034093_SeedWorkOrderStatus.Designer.cs">
       <DependentUpon>201806122034093_SeedWorkOrderStatus.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201806122034491_SeedLocations.cs" />
-    <Compile Include="Migrations\201806122034491_SeedLocations.Designer.cs">
-      <DependentUpon>201806122034491_SeedLocations.cs</DependentUpon>
+    <Compile Include="Migrations\201806131234488_SeedLocations.cs" />
+    <Compile Include="Migrations\201806131234488_SeedLocations.Designer.cs">
+      <DependentUpon>201806131234488_SeedLocations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
@@ -615,8 +615,8 @@
     <EmbeddedResource Include="Migrations\201806122034093_SeedWorkOrderStatus.resx">
       <DependentUpon>201806122034093_SeedWorkOrderStatus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806122034491_SeedLocations.resx">
-      <DependentUpon>201806122034491_SeedLocations.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806131234488_SeedLocations.resx">
+      <DependentUpon>201806131234488_SeedLocations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
