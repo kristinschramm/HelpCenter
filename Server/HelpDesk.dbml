@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="aspnet-HelpCenter-20180611012352" Class="HelpDeskDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=aspnet-HelpCenter-20180611012352;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="aspnet_HelpCenter_20180611012352ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.WorkOrders" Member="WorkOrders">
+    <Type Name="WorkOrder">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Subject" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CategoryId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StatusId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StatusDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="RequestorId" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="LocationId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AssignedUserId" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="CreateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ModifiedDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ExpectedCompletionDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="AppUser_WorkOrder" Member="AppUser" ThisKey="AssignedUserId" OtherKey="Id" Type="AppUser" IsForeignKey="true" />
+      <Association Name="AppUser_WorkOrder1" Member="AppUser1" ThisKey="RequestorId" OtherKey="Id" Type="AppUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AppUsers" Member="AppUsers">
+    <Type Name="AppUser">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NameFirst" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="NameLast" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="EmailAddress" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="LocationId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Discriminator" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Association Name="AppUser_WorkOrder" Member="WorkOrders" ThisKey="Id" OtherKey="AssignedUserId" Type="WorkOrder" />
+      <Association Name="AppUser_WorkOrder1" Member="WorkOrders1" ThisKey="Id" OtherKey="RequestorId" Type="WorkOrder" />
+    </Type>
+  </Table>
+</Database>
