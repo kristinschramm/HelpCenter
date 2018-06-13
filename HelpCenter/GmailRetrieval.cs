@@ -65,7 +65,7 @@ namespace HelpCenter
                         String date = "";
                         String subject = "";
 
-                        //loop through the headers to get from,date,subject, body  
+                        //loop through the headers to get from, date, subject, body
                         foreach (var mParts in emailInfoResponse.Payload.Headers)
                         {
                             if (mParts.Name == "Date")
@@ -89,7 +89,6 @@ namespace HelpCenter
                                     {
                                         byte[] data = FromBase64ForUrlString(p.Body.Data);
                                         string decodedString = Encoding.UTF8.GetString(data);
-
                                     }
                                 }
                             }
@@ -97,7 +96,6 @@ namespace HelpCenter
                     }
                 }
             }
-           // Console.ReadLine();
         }
 
         public static byte[] FromBase64ForUrlString(string base64ForUrlInput)

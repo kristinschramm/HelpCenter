@@ -239,6 +239,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GmailOutboundMessage.cs" />
     <Compile Include="GmailRetrieval.cs" />
     <Compile Include="Ignored\APIKeys.cs" />
     <Compile Include="Migrations\201806122030286_InitialSetup.cs" />
