@@ -36,7 +36,6 @@ namespace HelpCenter
                   "user",
                   CancellationToken.None,
                   new FileDataStore(credPath, true)).Result;
-                //Console.WriteLine("Credential file saved to: " + credPath);
             }
 
             // Create Gmail API service. 
@@ -45,7 +44,7 @@ namespace HelpCenter
                 HttpClientInitializer = credential,
                 ApplicationName = ApplicationName,
             });
-            var inboxlistRequest = service.Users.Messages.List("your email id");
+            var inboxlistRequest = service.Users.Messages.List("devseleniumhelpdesk@gmail.com");
             inboxlistRequest.LabelIds = "INBOX";
             inboxlistRequest.IncludeSpamTrash = false;
             //get our emails 
@@ -56,7 +55,7 @@ namespace HelpCenter
                 //loop through each email and get what fields you want...
                 foreach (var email in emailListResponse.Messages)
                 {
-                    var emailInfoRequest = service.Users.Messages.Get("your email id", email.Id);
+                    var emailInfoRequest = service.Users.Messages.Get("devseleniumhelpdesk@gmail.com", email.Id);
                     var emailInfoResponse = emailInfoRequest.Execute();
 
                     if (emailInfoResponse != null)
