@@ -23,19 +23,31 @@ namespace Server
                 ModifiedDateTime = dateTimeReceived,
                 StatusDateTime = dateTimeReceived,
                 RequestorId = appUserId,
-                LocationId = GetLocationIdByAppUserId(appUserId),
-                UnitId = GetUnitIdByAppUserId(appUserId),
+                LocationId = appUserId == null ? null : GetLocationIdByAppUserId(appUserId),
+                UnitId = appUserId == null ? null : GetUnitIdByAppUserId(appUserId),
                 StatusId = 1,
                 Subject = subject
             };
 
             _context.WorkOrders.InsertOnSubmit(workOrder);
             _context.SubmitChanges();
+
+            var workOrderComment = new WorkOrderComment()
+            {
+                CommentorId = appUserId,
+                CreateDateTime = dateTimeReceived,
+                WorkOrderId = workOrder.Id,
+                Comment = workOrderDescription
+            };
+
+            _context.WorkOrderComments.InsertOnSubmit(workOrderComment);
+            _context.SubmitChanges();
         }
 
         public string GetAppUserIdByEmail(string emailAddress)
         {
-            return _context.AppUsers.SingleOrDefault(a => a.EmailAddress == emailAddress).Id;
+            var appUser = _context.AppUsers.SingleOrDefault(a => a.EmailAddress == emailAddress);
+            return appUser == null ? null : appUser.Id;
         }
 
         public int? GetLocationIdByAppUserId(string appUserId)

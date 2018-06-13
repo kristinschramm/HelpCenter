@@ -11,9 +11,9 @@ namespace HelpCenter.Models
         public string Name { get; set; }
         public bool IsOpen { get; set; }
 
-        public static readonly string New = "NEW";
-        public static readonly string Assigned = "ASSIGNED";
-        public static readonly string InProgress = "IN PROGRESS";
-        public static readonly string Completed = "COMPLETED";
+        public static readonly int New = 1;
+        public static readonly int Assigned = 2;
+        public static readonly int InProgress = 3;
+        public static readonly int Completed = 4;
     }
 }

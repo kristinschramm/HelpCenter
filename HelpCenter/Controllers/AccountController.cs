@@ -166,18 +166,19 @@ namespace HelpCenter.Controllers
 
                 if (result.Succeeded)
                 {
-                    var leaseHolder = new LeaseHolder()
-                    {
-                        EmailAddress = model.Email,
-                        Id = user.Id,
-                        LocationId = model.LocationId,
-                        NameFirst = model.NameFirst,
-                        NameLast = model.NameLast,
-                        PhoneNumber = model.PhoneNumber,
-                        UnitId = model.UnitId
-                    };
+                    var leaseHolder = new LeaseHolder();
 
-                    _context.LeaseHolders.Add(leaseHolder);
+                    leaseHolder.EmailAddress = model.Email;
+                    leaseHolder.Id = user.Id;
+                    leaseHolder.LocationId = model.LocationId;
+                    leaseHolder.Location = _context.Locations.SingleOrDefault(l => l.Id == model.LocationId);
+                    leaseHolder.NameFirst = model.NameFirst;
+                    leaseHolder.NameLast = model.NameLast;
+                    leaseHolder.PhoneNumber = model.PhoneNumber;
+                    leaseHolder.UnitId = model.UnitId;
+                    leaseHolder.Unit = _context.Units.SingleOrDefault(u => u.Id == model.UnitId);
+
+                    _context.AppUsers.Add(leaseHolder);
                     _context.SaveChanges();
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -194,6 +195,7 @@ namespace HelpCenter.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            model.LocationsList = _context.Locations.ToList();
             return View(model);
         }
 

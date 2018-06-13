@@ -267,6 +267,10 @@
     <Compile Include="Migrations\201806131244031_SeedUnits.Designer.cs">
       <DependentUpon>201806131244031_SeedUnits.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806131558172_Models.WorkOrderComment.AppUserIdAsString.cs" />
+    <Compile Include="Migrations\201806131558172_Models.WorkOrderComment.AppUserIdAsString.Designer.cs">
+      <DependentUpon>201806131558172_Models.WorkOrderComment.AppUserIdAsString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -628,6 +632,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806131244031_SeedUnits.resx">
       <DependentUpon>201806131244031_SeedUnits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806131558172_Models.WorkOrderComment.AppUserIdAsString.resx">
+      <DependentUpon>201806131558172_Models.WorkOrderComment.AppUserIdAsString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
