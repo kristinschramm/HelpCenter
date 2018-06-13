@@ -1,0 +1,53 @@
+﻿@model IEnumerable<HelpCenter.Models.ViewModels.LeaseHolderViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tenant List</h2>
+@if ((string)TempData["ProfileUpdate"] == "success")
+{
+    <p class="text-success">Profile has been updated.</p>
+}
+    <table id="tenants" class="table table-bordered table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+
+                    <th>Location</th>
+                    <th>Open Work Orders</th>
+                    <th>Email</th>
+                    <th></th>@*Button for email, edit, details *@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var l in Model)
+                {
+                <tr>
+                    <td>@Html.ActionLink(l.LeaseHolder.NameFirst + " " + l.LeaseHolder.NameLast, "Details", "LeaseHolder", new { id = l.LeaseHolder.Id }, null)</td>
+                    <td>@l.LeaseHolder.PhoneNumber </td>
+                    <td>@l.LeaseHolder.Location.Name @l.LeaseHolder.Unit.Number</td>
+                    <td>@l.OpenWorkOrderCount</td>
+                    <td><a href="mailto:@l.LeaseHolder.EmailAddress">Email</a></td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "LeaseHolder", new { id = l.LeaseHolder.Id }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Details", "Details", "LeaseHolder", new { id = l.LeaseHolder.Id }, new { @class = "btn btn-default" })
+
+
+                </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+
+        @section scripts
+    {
+            <script>
+                $(document).ready(function () {
+                    $("#customers").DataTable();
+                })
+            </script>
+        }

@@ -271,6 +271,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LeaseHolder.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\ViewModels\LeaseHolderViewModel.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\Transaction.cs" />
@@ -584,7 +585,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\LeaseHolder\Profile.cshtml" />
+    <Content Include="Views\LeaseHolder\Details.cshtml" />
+    <Content Include="Views\LeaseHolder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

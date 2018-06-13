@@ -7,6 +7,8 @@ using System.Web.Security;
 using HelpCenter.Models;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
+using HelpCenter.Models.ViewModels;
+
 
 namespace HelpCenter.Controllers
 {
@@ -29,13 +31,23 @@ namespace HelpCenter.Controllers
             }
             else if(User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
             {
+                var viewModels = new List<LeaseHolderViewModel>();
+                
                 var leaseHolders = _context.AppUsers
                     .Where(l => l is LeaseHolder)
                     .OrderBy(l => l.NameLast)
                     .ThenBy(l => l.NameFirst)
                     .ToList();
+                foreach (var leaseHolder in leaseHolders)
+                {
+                    var viewModel = new LeaseHolderViewModel();
+                    viewModel.LeaseHolder = (LeaseHolder)leaseHolder;
+                    viewModel.OpenWorkOrderCount = _context.WorkOrders
+                        .Count(w => w.RequestorId == leaseHolder.Id);
+                    viewModels.Add(viewModel);                    
+                }
 
-                return View(leaseHolders);
+                return View(viewModels);
             }
             else
             {
