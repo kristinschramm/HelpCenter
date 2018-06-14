@@ -13,7 +13,7 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
     if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
     {
-        <div class="form-group">
+        <div class="form-group">            
             @Html.LabelFor(m => m.RequestorId, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.RequestorId, new SelectList(Model.Users, "Id", "NameFirstLastEmail"), "Select Requestor", new { @class = "form-control" })
