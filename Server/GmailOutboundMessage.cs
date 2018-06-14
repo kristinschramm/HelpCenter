@@ -13,35 +13,71 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Hosting;
+using Server;
 
-namespace HelpCenter
+namespace Server
 {
     public class GmailOutboundMessage
     {
-
-        public void SendIt()
+        private static HelpDeskDataContext _context;
+        private static GMailService _service;
+        public static void ListenForEmail()
         {
 
+            if (_context == null) { ActivateDBContext(); }
+            while (true)
+            {
+                var emailToSend = (
+                    from emails in _context.EMails
+                    where emails.Sent == false
+                    select emails
+                    ).FirstOrDefault();
+
+                if(emailToSend != null)
+                {
+                    SendIt(emailToSend);
+                    emailToSend.Sent = true;
+                    _context.SubmitChanges();
+                    //try
+                    //{
+                    //    SendIt(emailToSend);
+                    //    emailToSend.Sent = true;
+                    //}
+                    //catch (Exception e) 
+                    //{
+                    //    Console.WriteLine(e.StackTrace);
+                    //}
+                }
+            }
+        }
+
+        private static void ActivateDBContext()
+        {
+            _context = new HelpDeskDataContext();
+        }
+
+        public static void SendIt(EMail email)
+        {
             var msg = new AE.Net.Mail.MailMessage
             {
-                Subject = "Your Subject",
-                Body = "Hello, World, from Gmail API!",
+                Subject = email.Subject,
+                Body = "Fix it yourself",
                 From = new MailAddress("devseleniumhelpdesk@gmail.com")
             };
-            msg.To.Add(new MailAddress("yourbuddy@gmail.com"));
+            msg.To.Add(new MailAddress(email.ToEmailAddress));
             msg.ReplyTo.Add(msg.From); // Bounces without this!!
             var msgStr = new StringWriter();
             msg.Save(msgStr);
-
-
             // Context is a separate bit of code that provides OAuth context;
             // your construction of GmailService will be different from mine.
-            var gmail = new GmailService(new BaseClientService.Initializer());
-            var result = gmail.Users.Messages.Send(new Message
+            if (_service == null)
+            {
+                _service = new GMailService();
+            }
+            _service.Service.Users.Messages.Send(new Message
             {
                 Raw = Base64UrlEncode(msgStr.ToString())
-            }, "me").Execute();
-            Console.WriteLine("Message ID {0} sent.", result.Id);
+            }, "devseleniumhelpdesk@gmail.com").Execute();
         }
 
         private static string Base64UrlEncode(string input)

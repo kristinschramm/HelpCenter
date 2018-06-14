@@ -39,6 +39,9 @@ namespace Server
     partial void InsertWorkOrderComment(WorkOrderComment instance);
     partial void UpdateWorkOrderComment(WorkOrderComment instance);
     partial void DeleteWorkOrderComment(WorkOrderComment instance);
+    partial void InsertEMail(EMail instance);
+    partial void UpdateEMail(EMail instance);
+    partial void DeleteEMail(EMail instance);
     #endregion
 		
 		public HelpDeskDataContext() : 
@@ -92,6 +95,14 @@ namespace Server
 			get
 			{
 				return this.GetTable<WorkOrderComment>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EMail> EMails
+		{
+			get
+			{
+				return this.GetTable<EMail>();
 			}
 		}
 	}
@@ -1061,6 +1072,188 @@ namespace Server
 						this._WorkOrderId = default(int);
 					}
 					this.SendPropertyChanged("WorkOrder");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EMails")]
+	public partial class EMail : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.DateTime _CreateDateTime;
+		
+		private string _ToEmailAddress;
+		
+		private string _Subject;
+		
+		private string _Body;
+		
+		private bool _Sent;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnCreateDateTimeChanging(System.DateTime value);
+    partial void OnCreateDateTimeChanged();
+    partial void OnToEmailAddressChanging(string value);
+    partial void OnToEmailAddressChanged();
+    partial void OnSubjectChanging(string value);
+    partial void OnSubjectChanged();
+    partial void OnBodyChanging(string value);
+    partial void OnBodyChanged();
+    partial void OnSentChanging(bool value);
+    partial void OnSentChanged();
+    #endregion
+		
+		public EMail()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDateTime", DbType="DateTime NOT NULL")]
+		public System.DateTime CreateDateTime
+		{
+			get
+			{
+				return this._CreateDateTime;
+			}
+			set
+			{
+				if ((this._CreateDateTime != value))
+				{
+					this.OnCreateDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDateTime = value;
+					this.SendPropertyChanged("CreateDateTime");
+					this.OnCreateDateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ToEmailAddress", DbType="NVarChar(MAX)")]
+		public string ToEmailAddress
+		{
+			get
+			{
+				return this._ToEmailAddress;
+			}
+			set
+			{
+				if ((this._ToEmailAddress != value))
+				{
+					this.OnToEmailAddressChanging(value);
+					this.SendPropertyChanging();
+					this._ToEmailAddress = value;
+					this.SendPropertyChanged("ToEmailAddress");
+					this.OnToEmailAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Subject", DbType="NVarChar(MAX)")]
+		public string Subject
+		{
+			get
+			{
+				return this._Subject;
+			}
+			set
+			{
+				if ((this._Subject != value))
+				{
+					this.OnSubjectChanging(value);
+					this.SendPropertyChanging();
+					this._Subject = value;
+					this.SendPropertyChanged("Subject");
+					this.OnSubjectChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Body", DbType="NVarChar(MAX)")]
+		public string Body
+		{
+			get
+			{
+				return this._Body;
+			}
+			set
+			{
+				if ((this._Body != value))
+				{
+					this.OnBodyChanging(value);
+					this.SendPropertyChanging();
+					this._Body = value;
+					this.SendPropertyChanged("Body");
+					this.OnBodyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sent", DbType="Bit NOT NULL")]
+		public bool Sent
+		{
+			get
+			{
+				return this._Sent;
+			}
+			set
+			{
+				if ((this._Sent != value))
+				{
+					this.OnSentChanging(value);
+					this.SendPropertyChanging();
+					this._Sent = value;
+					this.SendPropertyChanged("Sent");
+					this.OnSentChanged();
 				}
 			}
 		}
