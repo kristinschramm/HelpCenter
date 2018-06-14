@@ -17,6 +17,7 @@ namespace Server
 {
     public class GMailService
     {
+
         static string[] Scopes = { GmailService.Scope.MailGoogleCom };
         static string ApplicationName = "Gmail API .NET Quickstart";
         

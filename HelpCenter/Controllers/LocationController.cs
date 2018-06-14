@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using HelpCenter.Models;
 using System.Data.Entity;
+using HelpCenter.Models.ViewModels;
 
 namespace HelpCenter.Controllers
 {
@@ -18,20 +19,68 @@ namespace HelpCenter.Controllers
         }
 
         // GET: Location
+        
         public ActionResult Index()
         {
-            var locations = _context.Locations
-                .OrderBy(l => l.Name)
-                .ToList();
+            if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+            {
+                var viewModels = new List<LocationViewModel>();
 
-            return View(locations);
+
+                var locations = _context.Locations
+                    .OrderBy(l => l.Name)
+                    .ToList();
+
+                foreach (var location in locations)
+                {
+                    var viewModel = new LocationViewModel();
+                    viewModel.Location= location;
+                    viewModel.OpenWorkOrderCount = _context.WorkOrders
+                        .Count(w => w.LocationId == location.Id);
+
+
+                    viewModel.Units = _context.Units.Where(u => u.LocationId == location.Id).ToList();
+
+                    viewModel.UnitCount = viewModel.Units.Count();
+
+                    viewModels.Add(viewModel);
+                }
+
+                return View(viewModels);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public ActionResult Details(int id)
         {
+            var viewModels = new List<UnitViewModel>();
             var location = _context.Locations.Single(l => l.Id == id);
+            var units = _context.Units.Where(u => u.LocationId == id).ToList();
+            var appUsers = _context.AppUsers.Where(l => l is LeaseHolder).ToList();
+            var leaseHolders = new List<LeaseHolder>();
 
-            return View(location);
+            foreach (var leaseHolder in appUsers)
+            {
+                leaseHolders.Add((LeaseHolder)leaseHolder);
+                
+            }                       
+
+            foreach (var unit in units)
+            {
+                var viewModel = new UnitViewModel();
+                viewModel.Unit= unit;
+                viewModel.LeaseHolder = leaseHolders.Single(l => l.UnitId == viewModel.Unit.Id);
+                viewModel.WorkOrders = _context.WorkOrders.Where(w => w.UnitId == viewModel.Unit.Id).ToList();
+                viewModel.Location = location;
+
+                viewModels.Add(viewModel);
+            }
+
+
+            return View(viewModels);
         }
 
         public ActionResult Edit (int id)

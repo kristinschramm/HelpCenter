@@ -21,7 +21,7 @@
         <classShapeMoniker Id="c1fd3d31-f310-4b09-a996-8c839d3d7585" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.625 : 3.18550170898437); (3.125 : 3.18550170898437)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.625 : 3.18550170898437); (3.125 : 3.18550170898437)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HelpDeskDataContext/AppUser/AppUser_WorkOrder1" />
       <nodes>
         <classShapeMoniker Id="4c90e310-7ff7-48fc-8fab-3f9842a5f2be" />
@@ -34,19 +34,25 @@
         <elementListCompartment Id="58001b79-4802-4833-beb3-e10658886ab6" absoluteBounds="6.015, 3.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.625 : 4.91270182291667); (6 : 4.91270182291667)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.625 : 4.91270182291667); (6 : 4.91270182291667)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HelpDeskDataContext/AppUser/AppUser_WorkOrderComment" />
       <nodes>
         <classShapeMoniker Id="4c90e310-7ff7-48fc-8fab-3f9842a5f2be" />
         <classShapeMoniker Id="a9f99354-d96b-40ec-b8e3-531c27953bef" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.125 : 3.99600341796875); (6 : 3.99600341796875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.125 : 3.99600341796875); (6 : 3.99600341796875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HelpDeskDataContext/WorkOrder/WorkOrder_WorkOrderComment" />
       <nodes>
         <classShapeMoniker Id="c1fd3d31-f310-4b09-a996-8c839d3d7585" />
         <classShapeMoniker Id="a9f99354-d96b-40ec-b8e3-531c27953bef" />
       </nodes>
     </associationConnector>
+    <classShape Id="0a941d88-d038-4957-8bd4-c8b5a74e7705" absoluteBounds="6.25, 0.75, 2, 1.9631982421875">
+      <DataClassMoniker Name="/HelpDeskDataContext/EMail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ed37d321-1793-418c-a8f1-217da935297c" absoluteBounds="6.265, 1.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

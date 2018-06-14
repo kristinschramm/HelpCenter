@@ -1,0 +1,52 @@
+﻿@model IEnumerable<HelpCenter.Models.ViewModels.LocationViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Location List</h2>
+@if ((string)TempData["ProfileUpdate"] == "success")
+{
+    <p class="text-success">Profile has been updated.</p>
+}
+<table id="locations" class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number of Units</th>
+            <th>Address</th>
+            <th>Open Work Orders</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var l in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(l.Location.Name, "Details", "Location", new { id = l.Location.Id }, null)</td>
+                <td>@l.UnitCount </td>
+                <td>@l.Location.Address, @l.Location.City, @l.Location.State, @l.Location.Zip</td> @*change to clickable link when maps works*@
+
+                <td>@l.OpenWorkOrderCount</td>
+                
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Location", new { id = l.Location.Id }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Details", "Details", "Location", new { id = l.Location.Id }, new { @class = "btn btn-default" })
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts
+    {
+    <script>
+                $(document).ready(function () {
+                    $("#locations").DataTable();
+                })
+    </script>
+}
