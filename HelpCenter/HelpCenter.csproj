@@ -249,6 +249,10 @@
     <Compile Include="Migrations\201806142004383_InitialMigration.Designer.cs">
       <DependentUpon>201806142004383_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806142016460_SeedData.cs" />
+    <Compile Include="Migrations\201806142016460_SeedData.Designer.cs">
+      <DependentUpon>201806142016460_SeedData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EMail.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
@@ -607,6 +611,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201806142004383_InitialMigration.resx">
       <DependentUpon>201806142004383_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806142016460_SeedData.resx">
+      <DependentUpon>201806142016460_SeedData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
