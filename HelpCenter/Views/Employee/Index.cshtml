@@ -1,0 +1,50 @@
+﻿@model IEnumerable<AppUser>
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Employee Directory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (User.IsInRole(RoleName.Manager))
+{
+    <p>@Html.ActionLink("Create Employee", "RegisterEmployee", "Account", null, new { @class = "btn btn-default" })</p>
+}
+
+<table id="employees" class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appUser in Model)
+        {
+        <tr>
+            @if (User.IsInRole(RoleName.Manager))
+            {
+                <td>@Html.ActionLink(appUser.NameFirstLast, "Edit", "Employee", new { id = appUser.Id }, null)</td>
+            }
+            else
+            {
+                <td>@Html.ActionLink(appUser.NameFirstLast, "Details", "Employee", new { id = appUser.Id }, null)</td>
+            }
+
+            <td>@appUser.PhoneNumber</td>
+            <td>@appUser.EmailAddress</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#employees").DataTable();
+        })
+    </script>
+    }

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HelpCenter.Models;
+using System.Collections.Generic;
 
 namespace HelpCenter.Controllers
 {
@@ -141,7 +142,6 @@ namespace HelpCenter.Controllers
         [AllowAnonymous]
         public ActionResult RegisterLeaseHolder()
         {
-            _context = new ApplicationDbContext();
             var viewModel = new RegisterLeaseHolderViewModel();
             viewModel.LocationsList = _context.Locations.ToList();
             return View(viewModel);
@@ -211,7 +211,10 @@ namespace HelpCenter.Controllers
         [Authorize(Roles = RoleName.Manager)]
         public ActionResult RegisterEmployee()
         {
-            return View();
+            var viewModel = new RegisterEmployeeViewModel();
+            viewModel.Roles = new List<string>() { RoleName.Technician, RoleName.Manager };
+
+            return View(viewModel);
         }
 
         //
@@ -228,13 +231,24 @@ namespace HelpCenter.Controllers
 
                 if (result.Succeeded)
                 {
-                    result = await UserManager.AddToRoleAsync(user.Id, RoleName.Technician);
+                    result = await UserManager.AddToRoleAsync(user.Id, model.Role);
                 }
 
                 if (result.Succeeded)
                 {
+                    var appUser = new AppUser()
+                    {
+                        EmailAddress = model.Email,
+                        Id = user.Id,
+                        PhoneNumber = model.PhoneNumber,
+                        NameFirst = model.NameFirst,
+                        NameLast = model.NameLast
+                    };
 
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    _context.AppUsers.Add(appUser);
+                    _context.SaveChanges();
+
+                    // await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -242,7 +256,7 @@ namespace HelpCenter.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Employee");
                 }
                 AddErrors(result);
             }

@@ -23,13 +23,13 @@ namespace HelpCenter.Controllers
         public ActionResult Index()
         {
             var employees = _context.AppUsers
-                .Select(e => !(e is LeaseHolder))
+                .Where(e => !(e is LeaseHolder))
                 .ToList();
 
             return View(employees);
         }
-        
-        public ActionResult Detail (string id)
+
+        public ActionResult Details (string id)
         {
             var employee = _context.AppUsers.Single(e => e.Id == id);
             return View(employee);

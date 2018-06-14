@@ -33,7 +33,7 @@
                     @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
                     {
                         <li>@Html.ActionLink("Tenant Directory", "Index", "LeaseHolder")</li>
-                        <li>@Html.ActionLink("Employee Directory", "Index", "AppUser")</li>
+                        <li>@Html.ActionLink("Employee Directory", "Index", "Employee")</li>
                         <li>@Html.ActionLink("Work Orders", "Index", "WorkOrder")</li>
 
                     }
