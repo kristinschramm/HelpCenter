@@ -317,6 +317,24 @@ namespace HelpCenter.Controllers
             return Json(units, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize(Roles =RoleName.EmployeeRoles)]
+        public ActionResult MyWorkOrders()
+        {
+            var appUserId = User.Identity.GetUserId();
+
+            var workOrders = _context.WorkOrders
+                    .Include(w => w.AssignedUser)
+                    .Include(w => w.Category)
+                    .Include(w => w.Location)
+                    .Include(w => w.Unit)
+                    .Include(w => w.Requestor)
+                    .Include(w => w.Status)
+                    .Where(w => w.AssignedUserId == appUserId)
+                    .ToList();
+
+            return View("Index", workOrders);
+        }
+
         public ActionResult Status(string id)
         {
             var status = id;
