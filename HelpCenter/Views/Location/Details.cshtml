@@ -1,0 +1,42 @@
+﻿@model IEnumerable<HelpCenter.Models.ViewModels.UnitViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2></h2>
+@if ((string)TempData["ProfileUpdate"] == "success")
+{
+    <p class="text-success">Profile has been updated.</p>
+}
+
+
+<table id="units" class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>Unit Number</th>
+            <th>Tenant Name</th>
+            <th>Tenant Phone Number</th>
+            <th>Open Work Orders</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var l in Model)
+        {
+            <tr>
+               
+               
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts
+    {
+    <script>
+                $(document).ready(function () {
+                    $("#units").DataTable();
+                })
+    </script>
+}

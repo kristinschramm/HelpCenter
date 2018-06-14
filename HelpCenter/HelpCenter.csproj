@@ -280,11 +280,13 @@
     <Compile Include="Models\LeaseHolder.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\ViewModels\LeaseHolderViewModel.cs" />
+    <Compile Include="Models\ViewModels\LocationViewModel.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\ViewModels\UnitViewModel.cs" />
     <Compile Include="Models\WorkOrder.cs" />
     <Compile Include="Models\WorkOrderCategory.cs" />
     <Compile Include="Models\WorkOrderComment.cs" />
@@ -597,17 +599,17 @@
     <Content Include="Views\LeaseHolder\Details.cshtml" />
     <Content Include="Views\LeaseHolder\Index.cshtml" />
     <Content Include="Views\LeaseHolder\Edit.cshtml" />
-
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\Details.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Account\RegisterEmployee.cshtml" />
-
+    <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\Location\Details.cshtml" />
+    <Content Include="Views\Location\Route.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
