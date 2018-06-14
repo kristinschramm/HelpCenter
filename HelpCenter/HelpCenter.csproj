@@ -241,37 +241,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Ignored\APIKeys.cs" />
-    <Compile Include="Migrations\201806122030286_InitialSetup.cs" />
-    <Compile Include="Migrations\201806122030286_InitialSetup.Designer.cs">
-      <DependentUpon>201806122030286_InitialSetup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806122032087_SeedAspNetRoles.cs" />
-    <Compile Include="Migrations\201806122032087_SeedAspNetRoles.Designer.cs">
-      <DependentUpon>201806122032087_SeedAspNetRoles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806122033034_SeedManagerUser.cs" />
-    <Compile Include="Migrations\201806122033034_SeedManagerUser.Designer.cs">
-      <DependentUpon>201806122033034_SeedManagerUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806122034093_SeedWorkOrderStatus.cs" />
-    <Compile Include="Migrations\201806122034093_SeedWorkOrderStatus.Designer.cs">
-      <DependentUpon>201806122034093_SeedWorkOrderStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806131234488_SeedLocations.cs" />
-    <Compile Include="Migrations\201806131234488_SeedLocations.Designer.cs">
-      <DependentUpon>201806131234488_SeedLocations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806131244031_SeedUnits.cs" />
-    <Compile Include="Migrations\201806131244031_SeedUnits.Designer.cs">
-      <DependentUpon>201806131244031_SeedUnits.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806131558172_Models.WorkOrderComment.AppUserIdAsString.cs" />
-    <Compile Include="Migrations\201806131558172_Models.WorkOrderComment.AppUserIdAsString.Designer.cs">
-      <DependentUpon>201806131558172_Models.WorkOrderComment.AppUserIdAsString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806132014197_CreateEmailModel.cs" />
-    <Compile Include="Migrations\201806132014197_CreateEmailModel.Designer.cs">
-      <DependentUpon>201806132014197_CreateEmailModel.cs</DependentUpon>
+    <Compile Include="Migrations\201806141558207_initial migration.cs" />
+    <Compile Include="Migrations\201806141558207_initial migration.Designer.cs">
+      <DependentUpon>201806141558207_initial migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EMail.cs" />
@@ -606,6 +578,7 @@
     <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\Location\Details.cshtml" />
     <Content Include="Views\Location\Route.cshtml" />
+    <Content Include="Views\Location\UnitDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -625,29 +598,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806122030286_InitialSetup.resx">
-      <DependentUpon>201806122030286_InitialSetup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806122032087_SeedAspNetRoles.resx">
-      <DependentUpon>201806122032087_SeedAspNetRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806122033034_SeedManagerUser.resx">
-      <DependentUpon>201806122033034_SeedManagerUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806122034093_SeedWorkOrderStatus.resx">
-      <DependentUpon>201806122034093_SeedWorkOrderStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806131234488_SeedLocations.resx">
-      <DependentUpon>201806131234488_SeedLocations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806131244031_SeedUnits.resx">
-      <DependentUpon>201806131244031_SeedUnits.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806131558172_Models.WorkOrderComment.AppUserIdAsString.resx">
-      <DependentUpon>201806131558172_Models.WorkOrderComment.AppUserIdAsString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806132014197_CreateEmailModel.resx">
-      <DependentUpon>201806132014197_CreateEmailModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806141558207_initial migration.resx">
+      <DependentUpon>201806141558207_initial migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

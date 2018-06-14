@@ -10,7 +10,7 @@ namespace HelpCenter.Models.ViewModels
         public int OpenWorkOrderCount { get; set; }
         public Location Location { get; set; }
 
-        public IEnumerable<Unit> Units { get; set; }
+        public IEnumerable<UnitViewModel> Units { get; set; }
 
         public int UnitCount { get; set; }
     }

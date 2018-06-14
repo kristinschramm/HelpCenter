@@ -38,8 +38,21 @@ namespace HelpCenter.Controllers
                     viewModel.OpenWorkOrderCount = _context.WorkOrders
                         .Count(w => w.LocationId == location.Id);
 
+                    var units = _context.Units.Where(u => u.LocationId == location.Id).ToList();
 
-                    viewModel.Units = _context.Units.Where(u => u.LocationId == location.Id).ToList();
+                    var Units = new List<UnitViewModel>();
+                    foreach (var unit in units)
+                    {
+                        var unitModel = new UnitViewModel();
+                        unitModel.Unit = unit;
+                        unitModel.LeaseHolder = _context.LeaseHolders.Single(l => l.UnitId == unit.Id);
+                        unitModel.OpenWorkOrderCount = _context.WorkOrders.Where(w => w.UnitId == unit.Id).Count();
+                        unitModel.Location = location;
+
+                        Units.Add(unitModel);
+
+                    }
+                    viewModel.Units = Units;
 
                     viewModel.UnitCount = viewModel.Units.Count();
 
@@ -73,7 +86,7 @@ namespace HelpCenter.Controllers
                 var viewModel = new UnitViewModel();
                 viewModel.Unit= unit;
                 viewModel.LeaseHolder = leaseHolders.Single(l => l.UnitId == viewModel.Unit.Id);
-                viewModel.WorkOrders = _context.WorkOrders.Where(w => w.UnitId == viewModel.Unit.Id).ToList();
+                viewModel.OpenWorkOrderCount = _context.WorkOrders.Where(w => w.UnitId == viewModel.Unit.Id).Count();
                 viewModel.Location = location;
 
                 viewModels.Add(viewModel);
@@ -81,6 +94,10 @@ namespace HelpCenter.Controllers
 
 
             return View(viewModels);
+        }
+        public ActionResult UnitDetails(UnitViewModel unitViewModel)
+        {
+            return View(unitViewModel);
         }
 
         public ActionResult Edit (int id)
