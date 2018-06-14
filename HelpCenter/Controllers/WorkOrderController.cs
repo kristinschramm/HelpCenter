@@ -99,6 +99,91 @@ namespace HelpCenter.Controllers
             return View("Index", workOrders);
         }
 
+        [Authorize]
+        public ActionResult Create()
+        {
+            var viewModel = new CreateWorkOrderViewModel()
+            {
+                Categories = _context.WorkOrderCategories.OrderBy(w => w.Name).ToList(),
+                Locations = _context.Locations.OrderBy(l => l.Name).ToList(),
+                Statues = _context.WorkOrderStatus.ToList(),
+                Employees = _context.AppUsers.Where(a => !(a is LeaseHolder)).ToList(),
+                Users = _context.AppUsers.ToList(),
+                StatusId = WorkOrderStatus.New,
+                RequestorId = User.Identity.GetUserId()
+            };
+
+            var appUser = _context.AppUsers.Where(u => u.Id == User.Identity.GetUserId());
+
+            if(appUser is LeaseHolder)
+            {
+                var leaseHolder = (LeaseHolder)appUser;
+                viewModel.LocationId = leaseHolder.LocationId;
+                viewModel.UnitId = leaseHolder.UnitId;
+            }
+
+            return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Create(CreateWorkOrderViewModel model)
+        {
+            var userId = User.Identity.GetUserId();
+            var leaseHolder = (LeaseHolder)_context.AppUsers.Single(a => a.Id == userId);
+            if (User.IsInRole(RoleName.LeaseHolder))
+            {
+                model.RequestorId = User.Identity.GetUserId();
+                model.AssignedUserId = null;
+                model.ExpectedCompletionDateTime = null;
+                model.LocationId = leaseHolder.LocationId;
+                model.UnitId = leaseHolder.UnitId;
+                model.StatusId = WorkOrderStatus.New;
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.Categories = _context.WorkOrderCategories.OrderBy(w => w.Name).ToList();
+                model.Locations = _context.Locations.OrderBy(l => l.Name).ToList();
+                model.Statues = _context.WorkOrderStatus.ToList();
+                model.Employees = _context.AppUsers.Where(a => !(a is LeaseHolder)).ToList();
+                model.Users = _context.AppUsers.ToList();
+
+                return View(model);
+            }
+
+            var newWorkOrder = new WorkOrder()
+            {
+                AssignedUserId = model.AssignedUserId,
+                CategoryId = model.CategoryId,
+                CreateDateTime = DateTime.Now,
+                ExpectedCompletionDateTime = model.ExpectedCompletionDateTime,
+                LocationId = model.LocationId,
+                ModifiedDateTime = DateTime.Now,
+                RequestorId = model.RequestorId,
+                StatusDateTime = DateTime.Now,
+                StatusId = model.StatusId,
+                Subject = model.Subject,
+                UnitId = model.UnitId
+            };
+
+            _context.WorkOrders.Add(newWorkOrder);
+            _context.SaveChanges();
+
+            var newWorkOrderComment = new WorkOrderComment()
+            {
+                Comment = model.WorkOrderDescription,
+                CommentorId = User.Identity.GetUserId(),
+                CreateDateTime = DateTime.Now,
+                WorkOrderId = newWorkOrder.Id
+            };
+
+            _context.WorkOrderComments.DefaultIfEmpty(newWorkOrderComment);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Details (int id)
         {
             var workOrder = _context.WorkOrders
@@ -189,6 +274,13 @@ namespace HelpCenter.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public JsonResult GetUnitsByLocationId(int locationId)
+        {
+            var units = _context.Units.Where(u => u.LocationId == locationId).ToList();
+
+            return Json(units, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Status(string id)

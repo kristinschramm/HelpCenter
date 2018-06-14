@@ -25,6 +25,16 @@ namespace HelpCenter.Models
             get { return NameLast + ", " + NameFirst; }
         }
 
+        public string NameFirstLastEmail
+        {
+            get { return NameFirst + " " + NameLast + " <" + EmailAddress + ">"; }
+        }
+
+        public string NameLastFirstEmail
+        {
+            get { return NameLast + ", " + NameFirst + " <" + EmailAddress + ">"; }
+        }
+
         public string PhoneNumber { get; set; }
 
         public string EmailAddress { get; set; }

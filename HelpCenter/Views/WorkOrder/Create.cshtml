@@ -1,0 +1,133 @@
+﻿@model CreateWorkOrderViewModel
+@{
+    ViewBag.Title = "Create a Work Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Create", "WorkOrder", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.RequestorId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.RequestorId, new SelectList(Model.Users, "Id", "NameFirstLastEmail"), "Select Requestor", new { @class = "form-control" })
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>
+            @Html.HiddenFor(m => m.RequestorId)
+        </div>
+    }
+    if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.LocationId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.LocationId, new SelectList(Model.Locations, "Id", "Name"), "Select Location", new { @class = "form-control" })
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>
+            @Html.HiddenFor(m => m.LocationId)
+        </div>
+    }
+
+    if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.UnitId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.UnitId, new SelectList(string.Empty, "Value", "Text"), "Select Unit", new { @class = "form-control" })
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>
+            @Html.HiddenFor(m => m.UnitId)
+        </div>
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CategoryId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Select Category", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Subject, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Subject, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.WorkOrderDescription, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.WorkOrderDescription, new { @class = "form-control" })
+        </div>
+    </div>
+    if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.StatusId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.Statues, "Id", "Name"), new { @class = "form-control" })
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>
+            @Html.HiddenFor(m => m.UnitId)
+        </div>
+    }
+    if (User.IsInRole(RoleName.Manager))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.AssignedUserId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.AssignedUserId, new SelectList(Model.Employees, "Id", "NameFirstLastEmail"), "Select a Technician", new { @class = "form-control" })
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>
+            @Html.HiddenFor(m => m.AssignedUserId)
+        </div>
+    }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#LocationId').change(function () {
+                $('#UnitId option').remove();
+                $('#UnitId').append('<option value = null> N/A </option>');
+                $.getJSON('/workorder/GetUnitsByLocationId', { locationId: $('#LocationId').val() }, function (data) {
+                    $.each(data, function () {
+                        $('#UnitId').append('<option value=' +
+                            this.Id + '>' + this.Number + '</option>');
+                    });
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert('Error retrieving units. ' + textStatus + " " + errorThrown);
+                });
+            });
+        });
+    </script>
+}

@@ -245,6 +245,10 @@
     <Compile Include="Migrations\201806141558207_initial migration.Designer.cs">
       <DependentUpon>201806141558207_initial migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806141621351_SeedWorkOrderCategories.cs" />
+    <Compile Include="Migrations\201806141621351_SeedWorkOrderCategories.Designer.cs">
+      <DependentUpon>201806141621351_SeedWorkOrderCategories.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EMail.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
@@ -575,6 +579,7 @@
     <Content Include="Views\Employee\Details.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Account\RegisterEmployee.cshtml" />
+    <Content Include="Views\WorkOrder\Create.cshtml" />
     <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\Location\Details.cshtml" />
     <Content Include="Views\Location\Route.cshtml" />
@@ -583,6 +588,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
+    <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -600,6 +606,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201806141558207_initial migration.resx">
       <DependentUpon>201806141558207_initial migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806141621351_SeedWorkOrderCategories.resx">
+      <DependentUpon>201806141621351_SeedWorkOrderCategories.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
