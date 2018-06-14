@@ -21,6 +21,7 @@ namespace Server
     {
         private static HelpDeskDataContext _context;
         private static GMailService _service;
+        private static readonly string UserName = "devseleniumhelpdesk@gmail.com";
         public static void ListenForEmail()
         {
 
@@ -42,6 +43,7 @@ namespace Server
                     //{
                     //    SendIt(emailToSend);
                     //    emailToSend.Sent = true;
+                    //    _context.SubmitChanges();
                     //}
                     //catch (Exception e) 
                     //{
@@ -61,8 +63,8 @@ namespace Server
             var msg = new AE.Net.Mail.MailMessage
             {
                 Subject = email.Subject,
-                Body = "Fix it yourself",
-                From = new MailAddress("devseleniumhelpdesk@gmail.com")
+                Body = email.Body,
+                From = new MailAddress(UserName)
             };
             msg.To.Add(new MailAddress(email.ToEmailAddress));
             msg.ReplyTo.Add(msg.From); // Bounces without this!!
@@ -77,7 +79,7 @@ namespace Server
             _service.Service.Users.Messages.Send(new Message
             {
                 Raw = Base64UrlEncode(msgStr.ToString())
-            }, "devseleniumhelpdesk@gmail.com").Execute();
+            }, UserName).Execute();
         }
 
         private static string Base64UrlEncode(string input)
