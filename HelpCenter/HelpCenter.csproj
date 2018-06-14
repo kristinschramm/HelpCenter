@@ -249,6 +249,10 @@
     <Compile Include="Migrations\201806141621351_SeedWorkOrderCategories.Designer.cs">
       <DependentUpon>201806141621351_SeedWorkOrderCategories.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806141825393_seed migration.cs" />
+    <Compile Include="Migrations\201806141825393_seed migration.Designer.cs">
+      <DependentUpon>201806141825393_seed migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EMail.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
@@ -588,7 +592,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -609,6 +612,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806141621351_SeedWorkOrderCategories.resx">
       <DependentUpon>201806141621351_SeedWorkOrderCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806141825393_seed migration.resx">
+      <DependentUpon>201806141825393_seed migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
