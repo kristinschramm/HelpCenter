@@ -92,7 +92,7 @@ namespace Server
                         }
                         DateTime dateTimeRecived;
                         DateTime.TryParse(dateString, out dateTimeRecived);
-                        if(dateTimeRecived == null)
+                        if(dateTimeRecived == DateTime.MinValue)
                         {
                             dateTimeRecived = DateTime.Now;
                         }

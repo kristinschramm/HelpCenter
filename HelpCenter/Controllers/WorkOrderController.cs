@@ -130,9 +130,10 @@ namespace HelpCenter.Controllers
         public ActionResult Create(CreateWorkOrderViewModel model)
         {
             var userId = User.Identity.GetUserId();
-            var leaseHolder = (LeaseHolder)_context.AppUsers.Single(a => a.Id == userId);
+            var appUser = _context.AppUsers.Single(a => a.Id == userId);
             if (User.IsInRole(RoleName.LeaseHolder))
             {
+                var leaseHolder = (LeaseHolder)appUser;
                 model.RequestorId = User.Identity.GetUserId();
                 model.AssignedUserId = null;
                 model.ExpectedCompletionDateTime = null;
@@ -178,7 +179,40 @@ namespace HelpCenter.Controllers
                 WorkOrderId = newWorkOrder.Id
             };
 
-            _context.WorkOrderComments.DefaultIfEmpty(newWorkOrderComment);
+            _context.WorkOrderComments.Add(newWorkOrderComment);
+            _context.SaveChanges();
+
+            newWorkOrder = _context.WorkOrders
+                .Include(w => w.AssignedUser)
+                .Include(w => w.Category)
+                .Include(w => w.Location)
+                .Include(w => w.Requestor)
+                .Include(w => w.Status)
+                .Include(w => w.Unit)
+                .Single(w => w.Id == newWorkOrder.Id);
+
+            var email = new EMail();
+            email.CreateDateTime = DateTime.Now;
+            email.ToEmailAddress = newWorkOrder.Requestor.EmailAddress;
+            email.Subject = $"{newWorkOrder.Subject} - Work Order # {newWorkOrder.Id} Created";
+            email.Body = $"Work Order #{newWorkOrder.Id} has been created per your request.";
+            email.Body = $"Work Order #{newWorkOrder.Id} has been created per your request." + $"\n\nStatus: {newWorkOrder.Status.Name}";
+            if(newWorkOrder.AssignedUser != null)
+            {
+                email.Body = email.Body + "\nAssinged To: " + newWorkOrder.AssignedUser.NameFirstLastEmail;
+            }
+            else
+            {
+                email.Body = email.Body + "\nAssigned To: Not Currently Assigned";
+            }
+            
+            email.Body = email.Body + "\nLocation: " + newWorkOrder.Location == null ? "No Location Provided" : newWorkOrder.Location.Name + ", " + newWorkOrder.Location.Address;
+            email.Body = email.Body + newWorkOrder.Unit.Number;
+            email.Body = email.Body + $"\n\nCategory: {newWorkOrder.Category.Name}\nSubject: {newWorkOrder.Subject}";
+            email.Body = email.Body + $"\n{newWorkOrderComment.Comment}";
+            email.Sent = false;
+
+            _context.EMails.Add(email);
             _context.SaveChanges();
 
             return RedirectToAction("Index");

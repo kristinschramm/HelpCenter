@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 using Server;
+using System.Threading;
 
 [assembly: OwinStartupAttribute(typeof(Server.Startup))]
 namespace Server
@@ -10,8 +11,8 @@ namespace Server
         public void Configuration(IAppBuilder app)
         {
             // ConfigureAuth(app);
-            GmailOutboundMessage.ListenForEmail();
-            //GmailRetrieval.GetEmails();
+            new Thread(new ThreadStart(GmailOutboundMessage.ListenForEmail)).Start();
+            GmailRetrieval.GetEmails();
         }
     }
 }
