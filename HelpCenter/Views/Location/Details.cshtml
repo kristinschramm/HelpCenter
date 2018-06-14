@@ -1,13 +1,9 @@
-﻿@model IEnumerable<HelpCenter.Models.ViewModels.UnitViewModel>
+﻿@model HelpCenter.Models.ViewModels.LocationViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2></h2>
-@if ((string)TempData["ProfileUpdate"] == "success")
-{
-    <p class="text-success">Profile has been updated.</p>
-}
+<h2>@Model.Location.Name</h2>
 
 
 <table id="units" class="table table-bordered table-hover table-responsive">
@@ -21,12 +17,13 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var l in Model)
+        @foreach (var unit in Model.Units)
         {
-            <tr>
-               
-               
-            </tr>
+            <tr>@Html.ActionLink(unit.Unit.Number, "UnitDetails", "Location", new { UnitViewModel = unit }, new { @class = "btn btn-default" })
+</tr>
+            <tr>@unit.LeaseHolder.NameFirstLast</tr>
+            <tr>@unit.LeaseHolder.PhoneNumber</tr>
+            <tr>@unit.OpenWorkOrderCount</tr>
         }
     </tbody>
 </table>

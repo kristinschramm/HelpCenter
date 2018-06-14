@@ -7,13 +7,13 @@ namespace HelpCenter.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class ModelsWorkOrderCommentAppUserIdAsString : IMigrationMetadata
+    public sealed partial class seedmigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ModelsWorkOrderCommentAppUserIdAsString));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(seedmigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201806131558172_Models.WorkOrderComment.AppUserIdAsString"; }
+            get { return "201806141825393_seed migration"; }
         }
         
         string IMigrationMetadata.Source
