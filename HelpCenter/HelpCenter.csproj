@@ -245,17 +245,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Ignored\APIKeys.cs" />
-    <Compile Include="Migrations\201806141558207_initial migration.cs" />
-    <Compile Include="Migrations\201806141558207_initial migration.Designer.cs">
-      <DependentUpon>201806141558207_initial migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806141621351_SeedWorkOrderCategories.cs" />
-    <Compile Include="Migrations\201806141621351_SeedWorkOrderCategories.Designer.cs">
-      <DependentUpon>201806141621351_SeedWorkOrderCategories.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806141825393_seed migration.cs" />
-    <Compile Include="Migrations\201806141825393_seed migration.Designer.cs">
-      <DependentUpon>201806141825393_seed migration.cs</DependentUpon>
+    <Compile Include="Migrations\201806142004383_InitialMigration.cs" />
+    <Compile Include="Migrations\201806142004383_InitialMigration.Designer.cs">
+      <DependentUpon>201806142004383_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EMail.cs" />
@@ -613,14 +605,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806141558207_initial migration.resx">
-      <DependentUpon>201806141558207_initial migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806141621351_SeedWorkOrderCategories.resx">
-      <DependentUpon>201806141621351_SeedWorkOrderCategories.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806141825393_seed migration.resx">
-      <DependentUpon>201806141825393_seed migration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806142004383_InitialMigration.resx">
+      <DependentUpon>201806142004383_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
