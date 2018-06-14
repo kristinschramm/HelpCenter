@@ -590,6 +590,7 @@
     <Content Include="Views\Location\Route.cshtml" />
     <Content Include="Views\Location\UnitDetails.cshtml" />
     <Content Include="Views\Map\Map.cshtml" />
+    <Content Include="Views\WorkOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

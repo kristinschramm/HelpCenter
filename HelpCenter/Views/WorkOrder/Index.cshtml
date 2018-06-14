@@ -1,1 +1,45 @@
-﻿
+﻿@model IEnumerable<WorkOrder>
+@{
+    ViewBag.Title = "Work Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+<table id="workorders" class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>WO #</th>
+            <th>Requestor</th>
+            <th>Location</th>
+            <th>Category</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Modified</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var workOrder in Model)
+        {
+            <tr>
+                <td>@workOrder.Id</td>
+                <td>@workOrder.Requestor.NameFirstLast</td>
+                <td>@workOrder.Location.Name<br />@workOrder.Location.City, @workOrder.Location.State</td>
+                <td>@workOrder.Category.Name</td>
+                <td>@workOrder.Subject</td>
+                <td>@workOrder.Status.Name</td>
+                <td>@workOrder.ModifiedDateTime.ToString("MM/dd/yy HH:mm")</td>
+                <td>@workOrder.CreateDateTime.ToString("MM/dd/yy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        $("#workorders").DataTable();
+    })
+    </script>
+    }
