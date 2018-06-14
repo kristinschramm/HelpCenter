@@ -1,0 +1,17 @@
+﻿@model AppUser
+@{
+    ViewBag.Title = Model.NameFirstLast + " Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<dl class="dl-horizontal" accesskey="">
+    <dt>Name</dt>
+    <dd>@Model.NameFirstLast</dd>
+    <dt>Phone</dt>
+    <dd>@Model.PhoneNumber</dd>
+    <dt>Email</dt>
+    <dd><a href="mailto:@Model.EmailAddress">@Model.EmailAddress</a></dd>
+</dl>
+
