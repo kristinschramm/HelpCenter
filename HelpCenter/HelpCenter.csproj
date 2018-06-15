@@ -240,7 +240,6 @@
     <Compile Include="Controllers\LeaseHolderController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -590,7 +589,10 @@
     <Content Include="Views\Location\Details.cshtml" />
     <Content Include="Views\Location\Route.cshtml" />
     <Content Include="Views\Location\UnitDetails.cshtml" />
-    <Content Include="Views\Map\Map.cshtml" />
+
+ 
+
+
     <Content Include="Views\WorkOrder\Index.cshtml" />
     <Content Include="Views\WorkOrder\Details.cshtml" />
     <Content Include="Views\WorkOrder\Edit.cshtml" />
