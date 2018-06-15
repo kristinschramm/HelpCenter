@@ -1,0 +1,36 @@
+﻿@model WorkOrderViewModel
+@{
+    ViewBag.Title = "WO# " + Model.WorkOrder.Id + " Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ViewBag.Title</h2>
+<hr />
+<dl class="dl-horizontal">
+    <dt>Work Order #</dt>
+    <dd>@Model.WorkOrder.Id</dd>
+    <dt>Category</dt>
+    <dd>@(Model.WorkOrder.Category != null ? Model.WorkOrder.Category.Name : "-")</dd>
+    <dt>Subject</dt>
+    <dd>@Model.WorkOrder.Subject</dd>
+    <dt>Description</dt>
+    <dd>@Model.Comments[Model.Comments.Count - 1].Comment</dd>
+    <hr />
+    <dt>Status</dt>
+    <dd>@Model.WorkOrder.Status.Name</dd>
+    <dt>Assigned to</dt>
+    @if(Model.WorkOrder.AssignedUser != null)
+    {
+    <dd><a href="mailto:@Model.WorkOrder.AssignedUser.EmailAddress"> @Model.WorkOrder.AssignedUser.NameFirstLast</a></dd>
+    }
+    else
+    {
+        <dd style="font-style:italic">Unassigned</dd>
+    }
+    <dt></dt>
+    <dd></dd>
+    <dt>Created</dt>
+    <dd>@Model.WorkOrder.CreateDateTime.ToString()</dd>
+    @Model.
+</dl>
+

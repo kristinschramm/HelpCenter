@@ -54,6 +54,7 @@ namespace HelpCenter.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            ViewBag.Title = "Work Orders";
             return View(workOrders);
         }
 
@@ -95,7 +96,7 @@ namespace HelpCenter.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
+            ViewBag.Title = "Closed Work Orders";
             return View("Index", workOrders);
         }
 
@@ -233,7 +234,7 @@ namespace HelpCenter.Controllers
             {
                 if(User.Identity.GetUserId() == workOrder.RequestorId)
                 {
-                    var comments = _context.WorkOrderComments.Where(w => w.WorkOrderId == id).ToList();
+                    var comments = _context.WorkOrderComments.Where(w => w.WorkOrderId == id).OrderByDescending(w => w.CreateDateTime).ToList();
                     var viewModel = new WorkOrderViewModel()
                     {
                         WorkOrder = workOrder,
@@ -331,7 +332,7 @@ namespace HelpCenter.Controllers
                     .Include(w => w.Status)
                     .Where(w => w.AssignedUserId == appUserId)
                     .ToList();
-
+            ViewBag.Title = "My Work Orders";
             return View("Index", workOrders);
         }
 
@@ -373,7 +374,7 @@ namespace HelpCenter.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
+            ViewBag.Title = status.ToUpper() + " Work Orders";
             return View("Index", workOrders);
         }
 
@@ -414,8 +415,8 @@ namespace HelpCenter.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
 
+            ViewBag.Title = "Open Work Orders";
             return View("Index", workOrders);
         }
     }

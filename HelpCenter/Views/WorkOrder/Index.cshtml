@@ -1,52 +1,66 @@
 ﻿@model IEnumerable<WorkOrder>
 @{
-    ViewBag.Title = "Work Orders";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 <hr />
-<table id="workorders" class="table table-bordered table-hover table-responsive">
-    <thead>
-        <tr>
-            <th>WO #</th>
-            <th>Requestor</th>
-            <th>Location</th>
-            <th>Category</th>
-            <th>Subject</th>
-            <th>Status</th>
-            <th>Modified</th>
-            <th>Created</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var workOrder in Model)
-        {
-        <tr>
-            @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
-            {
-                <td>@Html.ActionLink(workOrder.Id.ToString(), "Edit", new { id = workOrder.Id }, null)</td>
-            }
-            else
-            {
-                <td>@Html.ActionLink(workOrder.Id.ToString(), "Details", new { id = workOrder.Id }, null)</td>
-            }
-            <td>@workOrder.Requestor.NameFirstLast</td>
-            <td>@workOrder.Location.Name<br />@workOrder.Location.City, @workOrder.Location.State</td>
-            <td>@workOrder.Category.Name</td>
-            <td>@workOrder.Subject</td>
-            <td>@workOrder.Status.Name</td>
-            <td>@workOrder.ModifiedDateTime.ToString("MM/dd/yy HH:mm")</td>
-            <td>@workOrder.CreateDateTime.ToString("MM/dd/yy HH:mm")</td>
-        </tr>
-        }
-    </tbody>
-</table>
-
+<div class="row">
+    <div class="col-md-2">
+        <h4>Additional Views</h4>
+        <ul>
+            <li>@Html.ActionLink("My Work Orders", "MyWorkOrders")</li>
+            <li>@Html.ActionLink("Open", "Open")</li>
+            <li>@Html.ActionLink("New", "Status", new { id = "NEW" })</li>
+            <li>@Html.ActionLink("Assigned", "Status", new { id = "Assigned" })</li>
+            <li>@Html.ActionLink("In Progress", "Status", new { id = "IN PROGRESS" })</li>
+            <li>@Html.ActionLink("Closed", "Closed")</li>
+            <li>@Html.ActionLink("All Work Orders", "Index")</li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <table id="workorders" class="table table-bordered table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>WO #</th>
+                    <th>Requestor</th>
+                    <th>Location</th>
+                    <th>Category</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Modified</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var workOrder in Model)
+                {
+                    <tr>
+                        @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+                        {
+                            <td>@Html.ActionLink(workOrder.Id.ToString(), "Edit", new { id = workOrder.Id }, null)</td>
+                        }
+                        else
+                        {
+                            <td>@Html.ActionLink(workOrder.Id.ToString(), "Details", new { id = workOrder.Id }, null)</td>
+                        }
+                        <td>@workOrder.Requestor.NameFirstLast</td>
+                        <td>@workOrder.Location.Name<br />@workOrder.Location.City, @workOrder.Location.State</td>
+                        <td>@workOrder.Category.Name</td>
+                        <td>@workOrder.Subject</td>
+                        <td title="@workOrder.StatusDateTime.ToString("MM/dd/yyyy HH:mm")">@workOrder.Status.Name</td>
+                        <td>@workOrder.ModifiedDateTime.ToString("MM/dd/yy HH:mm")</td>
+                        <td>@workOrder.CreateDateTime.ToString("MM/dd/yy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 @section scripts{
-<script>
-    $(document).ready(function () {
-        $("#workorders").DataTable();
-    })
+    <script>
+        $(document).ready(function () {
+            $("#workorders").DataTable();
+        })
     </script>
-    }
+}
