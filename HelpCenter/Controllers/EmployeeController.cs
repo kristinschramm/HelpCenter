@@ -38,7 +38,8 @@ namespace HelpCenter.Controllers
         [Authorize(Roles = RoleName.Manager)]
         public ActionResult Edit (string id)
         {
-            var employee = _context.AppUsers.Single(e => e.Id == id);
+            var employeeId = id;
+            var employee = _context.AppUsers.Single(e => e.Id == employeeId);
             return View(employee);
         }
 

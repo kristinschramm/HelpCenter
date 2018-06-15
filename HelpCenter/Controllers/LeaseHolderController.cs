@@ -63,31 +63,43 @@ namespace HelpCenter.Controllers
 
         public ActionResult Details(string id)
         {
-            if (User.IsInRole(RoleName.LeaseHolder))
-            {
-                id = User.Identity.GetUserId();
-            }
-
             var leaseHolder = _context.LeaseHolders
-                .Include(l => l.Location)
-                .Include(l => l.Unit)
-                .Single(l => l.Id == id);
+                   .Single(l => l.Id == id);
+            var locationList = _context.Locations.ToList();
+            var unit = _context.Units.Single(u => u.Id == leaseHolder.UnitId);
+            var workOrders = _context.WorkOrders.Where(w => w.RequestorId == leaseHolder.Id).ToList();
 
-            return View(leaseHolder);
+            var viewModel = new LeaseHolderViewModel();
+            {
+                viewModel.LeaseHolder = leaseHolder;
+                viewModel.Locations = locationList;
+                viewModel.Location = leaseHolder.Location;
+                viewModel.Unit = unit;
+                viewModel.WorkOrders = workOrders;
+            };
+            return View(viewModel);
         }
 
         public ActionResult Edit(string id)
         {
             if (User.IsInRole(RoleName.LeaseHolder))
             {
-                id = User.Identity.GetUserId();   
+                id = User.Identity.GetUserId();
             }
 
             var leaseHolder = _context.LeaseHolders
-                    .Include(l => l.Location)
-                    .Include(l => l.Unit)
                     .Single(l => l.Id == id);
-            return View(leaseHolder);
+            var locationList = _context.Locations.ToList();
+            var unit = _context.Units.Single(u => u.Id == leaseHolder.UnitId);
+
+            var viewModel = new LeaseHolderViewModel();
+            {
+                viewModel.LeaseHolder = leaseHolder;
+                viewModel.Locations = locationList;
+                viewModel.Location = leaseHolder.Location;
+                viewModel.Unit = unit;
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
