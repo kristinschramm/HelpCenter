@@ -25,9 +25,27 @@
         <div class="col-md-10">
             @Html.DropDownListFor(l => l.LeaseHolder.LocationId, new SelectList(Model.Locations, "Id", "Name"), "Select Location", new { @class = "form-control" })
         </div>
-        @Html.LabelFor(l=> l.LeaseHolder.UnitId, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(l => l.LeaseHolder.Unit.Number, new { @class = "form-control" })
-        </div>
-    </div>
+    @Html.LabelFor(m => m.LeaseHolder.UnitId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.LeaseHolder.UnitId, new SelectList(string.Empty, "Value", "Text"), "Select Unit", new { @class = "form-control" })
+            </div>
+        </div>        
+  
 }
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#LeaseHolder_LocationId').change(function () {
+                $('#LeaseHolder_UnitId option').remove();
+                $('#LeaseHolder_UnitId').append('<option value=null> N/A </option>');
+                $.getJSON('/workorder/GetUnitsByLocationId', { locationId: $('#LeaseHolder_LocationId').val() }, function (data) {
+                    $.each(data, function () {
+                        $('#LeaseHolder_UnitId').append('<option value=' + this.Id + '>' + this.Number + '</option>');
+                    });
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert('Error retrieving units. ' + textStatus + " " + errorThrown);
+                });
+            });
+        });
+    </script>}
