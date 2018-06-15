@@ -1,0 +1,48 @@
+﻿@model HelpCenter.Models.ViewModels.UnitViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@Model.Location.Name</h2>
+<h3>@Model.Unit.Number</h3>
+
+<p>@Model.Location.Address, @Model.Location.City, @Model.Location.State, @Model.Location.Zip</p>
+
+<p>@Model.LeaseHolder.NameFirstLast</p>
+<p>@Model.LeaseHolder.PhoneNumber</p>
+
+
+<table id="workOrders" class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>Date Submitted</th>
+            <th>Subject</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Date Modified</th>
+            <th>Update</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var workOrder in Model.WorkOrders)
+        {
+         <tr>@workOrder.CreateDateTime.Date</tr>
+        <tr>@workOrder.Subject</tr>
+        <tr>@workOrder.Category.Name</tr>
+        <tr>@workOrder.Status.Name</tr>
+        <tr>@workOrder.StatusDateTime</tr>
+        <tr>@Html.ActionLink("Update", "Edit", "WorkOrder", new { id = workOrder.Id }, null)</tr>
+    }
+    </tbody>
+</table>
+
+
+@section scripts
+    {
+    <script>
+                $(document).ready(function () {
+                    $("#workOrders").DataTable();
+                })
+    </script>
+}
