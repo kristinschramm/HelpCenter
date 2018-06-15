@@ -4,11 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ViewBag.Title</h2>
+<h2>Work Order #@Model.WorkOrder.Id</h2>
+
+@if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+{
+    @Html.ActionLink("Edit Work Order", "Edit", new { id = Model.WorkOrder.Id }, new { @class = "btn btn-default" })
+}
 <hr />
 <dl class="dl-horizontal">
     <dt>Work Order #</dt>
     <dd>@Model.WorkOrder.Id</dd>
+    <dt>Requested by</dt>
+    <dd>@Model.WorkOrder.Requestor.NameFirstLastEmail</dd>
+    <dt>Location</dt>
+    <dd>@Model.WorkOrder.Location.Name</dd>
+    <dd>@Model.WorkOrder.Location.Address</dd>
+    <dd>@Model.WorkOrder.Location.City, @Model.WorkOrder.Location.State @Model.WorkOrder.Location.Zip</dd>
+    <dt>Unit</dt>
+    <dd>@Model.WorkOrder.Unit.Number</dd>
+    <hr />
     <dt>Category</dt>
     <dd>@(Model.WorkOrder.Category != null ? Model.WorkOrder.Category.Name : "-")</dd>
     <dt>Subject</dt>
@@ -16,21 +30,68 @@
     <dt>Description</dt>
     <dd>@Model.Comments[Model.Comments.Count - 1].Comment</dd>
     <hr />
-    <dt>Status</dt>
-    <dd>@Model.WorkOrder.Status.Name</dd>
     <dt>Assigned to</dt>
-    @if(Model.WorkOrder.AssignedUser != null)
+    @if (Model.WorkOrder.AssignedUser != null)
     {
-    <dd><a href="mailto:@Model.WorkOrder.AssignedUser.EmailAddress"> @Model.WorkOrder.AssignedUser.NameFirstLast</a></dd>
+        <dd><a href="mailto:@Model.WorkOrder.AssignedUser.EmailAddress"> @Model.WorkOrder.AssignedUser.NameFirstLast</a></dd>
     }
     else
     {
         <dd style="font-style:italic">Unassigned</dd>
     }
-    <dt></dt>
-    <dd></dd>
+    <dt>Status</dt>
+    <dd>@Model.WorkOrder.Status.Name</dd>
+    <hr />
+    <dt>Status Date/Time</dt>
+    <dd>@Model.WorkOrder.StatusDateTime.ToString("ddd, MMMM dd, yyyy hh:mm:ss tt")</dd>
+    @if (Model.WorkOrder.ExpectedCompletionDateTime != null)
+    {
+        <dt>Expected Completion</dt>
+        <dd>@Model.WorkOrder.ExpectedCompletionDateTime.Value.ToString("ddd, MMMM dd, yyyy hh:mm:ss tt")</dd>
+    }
+    <dt>Last Modified</dt>
+    <dd>@Model.WorkOrder.ModifiedDateTime.ToString("ddd, MMMM dd, yyyy hh:mm:ss tt")</dd>
     <dt>Created</dt>
-    <dd>@Model.WorkOrder.CreateDateTime.ToString()</dd>
-    @Model.
+    <dd>@Model.WorkOrder.CreateDateTime.ToString("ddd, MMMM dd, yyyy hh:mm:ss tt")</dd>
 </dl>
+<hr class="hr-style18" />
+@using (Html.BeginForm("AddComment", "WorkOrder", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.NewComment, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.NewComment, new { @class = "form-control" })
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.WorkOrder.Id)
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}
+
+<hr />
+<table class="table table-bordered table-responsive table-hover">
+    <thead>
+        <tr>
+            <th>Date/Time</th>
+            <th>User</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var comment in Model.Comments)
+        {
+            <tr>
+                <td>@comment.CreateDateTime.ToString("MM/dd/yyyy HH:mm")</td>
+                <td>@comment.Commentor.NameFirstLastEmail</td>
+                <td>@comment.Comment</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 

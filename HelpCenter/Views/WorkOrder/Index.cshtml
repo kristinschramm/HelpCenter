@@ -35,23 +35,16 @@
             <tbody>
                 @foreach (var workOrder in Model)
                 {
-                    <tr>
-                        @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
-                        {
-                            <td>@Html.ActionLink(workOrder.Id.ToString(), "Edit", new { id = workOrder.Id }, null)</td>
-                        }
-                        else
-                        {
-                            <td>@Html.ActionLink(workOrder.Id.ToString(), "Details", new { id = workOrder.Id }, null)</td>
-                        }
-                        <td>@workOrder.Requestor.NameFirstLast</td>
-                        <td>@workOrder.Location.Name<br />@workOrder.Location.City, @workOrder.Location.State</td>
-                        <td>@workOrder.Category.Name</td>
-                        <td>@workOrder.Subject</td>
-                        <td title="@workOrder.StatusDateTime.ToString("MM/dd/yyyy HH:mm")">@workOrder.Status.Name</td>
-                        <td>@workOrder.ModifiedDateTime.ToString("MM/dd/yy HH:mm")</td>
-                        <td>@workOrder.CreateDateTime.ToString("MM/dd/yy HH:mm")</td>
-                    </tr>
+                <tr>
+                    <td>@Html.ActionLink(workOrder.Id.ToString(), "Details", new { id = workOrder.Id }, null)</td>
+                    <td>@workOrder.Requestor.NameFirstLast</td>
+                    <td>@workOrder.Location.Name<br />@workOrder.Location.City, @workOrder.Location.State</td>
+                    <td>@workOrder.Category.Name</td>
+                    <td>@workOrder.Subject</td>
+                    <td title="@workOrder.StatusDateTime.ToString("MM/dd/yyyy HH:mm")">@workOrder.Status.Name</td>
+                    <td>@workOrder.ModifiedDateTime.ToString("MM/dd/yy HH:mm")</td>
+                    <td>@workOrder.CreateDateTime.ToString("MM/dd/yy HH:mm")</td>
+                </tr>
                 }
             </tbody>
         </table>
