@@ -386,7 +386,7 @@ namespace HelpCenter.Controllers
         {
             var email = new EMail();
             var workOrderDescription = _context.WorkOrderComments.Where(w => w.Id == workOrder.Id).OrderBy(w => w.CreateDateTime).First().Comment;
-            var comments = _context.WorkOrderComments.Where(w => w.Id == workOrder.Id).OrderBy(w => w.CreateDateTime).ToList();
+            var comments = _context.WorkOrderComments.Where(w => w.WorkOrderId == workOrder.Id).OrderBy(w => w.CreateDateTime).ToList();
             switch (emailType.ToLower())
             {
                 case "new":

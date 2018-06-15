@@ -37,10 +37,31 @@ namespace Server
                 CommentorId = appUserId,
                 CreateDateTime = dateTimeReceived,
                 WorkOrderId = workOrder.Id,
-                Comment = workOrderDescription
+                Comment = dateTimeReceived + "\n\r" + requestorEmailAddress + "\n\r" + workOrderDescription
             };
 
             _context.WorkOrderComments.InsertOnSubmit(workOrderComment);
+            _context.SubmitChanges();
+
+            SendEmail(workOrder, requestorEmailAddress, workOrderDescription);
+
+        }
+
+        public void SendEmail(WorkOrder workOrder, string sendToEmailAddress, string workOrderDescription)
+        {
+            var email = new EMail();
+            email.CreateDateTime = DateTime.Now;
+            email.ToEmailAddress = sendToEmailAddress;
+            email.Subject = $"{workOrder.Subject} - Work Order # {workOrder.Id} Created";
+            email.Body = $"Work Order #{workOrder.Id} has been created per your request." + $"\n\r\n\rStatus: NEW";
+            email.Body = email.Body + "\n\r\n\r\n\rAssigned To: Not Currently Assigned";
+
+            email.Body = email.Body + "\n\rLocation: " + "No Location Provided";
+            email.Body = email.Body + $"\n\r\n\r\n\r\n\rCategory: Uncategorized\n\r\n\r\n\rSubject: {workOrder.Subject}";
+            email.Body = email.Body + $"\n\r\n\r\n\r{workOrderDescription}";
+            email.Sent = false;
+
+            _context.EMails.InsertOnSubmit(email);
             _context.SubmitChanges();
         }
 
