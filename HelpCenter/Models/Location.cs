@@ -18,5 +18,9 @@ namespace HelpCenter.Models
         public string State { get; set; }
 
         public string Zip { get; set; }
+
+        public double Lat { get; set; }
+
+        public double Lng { get; set; }
     }
 }

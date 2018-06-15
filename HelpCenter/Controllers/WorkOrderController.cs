@@ -384,6 +384,12 @@ namespace HelpCenter.Controllers
             return View("Index", workOrders);
         }
 
+        public void SendEmail (string emailType, WorkOrder workOrder)
+        {
+            var email = new EMail();
+
+        }
+
         public ActionResult Status(string id)
         {
             var status = id;

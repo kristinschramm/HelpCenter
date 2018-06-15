@@ -253,6 +253,14 @@
     <Compile Include="Migrations\201806142016460_SeedData.Designer.cs">
       <DependentUpon>201806142016460_SeedData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806152000400_UpdateLocationWithLatLng.cs" />
+    <Compile Include="Migrations\201806152000400_UpdateLocationWithLatLng.Designer.cs">
+      <DependentUpon>201806152000400_UpdateLocationWithLatLng.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806152001183_UpdateLocationsLatLng.cs" />
+    <Compile Include="Migrations\201806152001183_UpdateLocationsLatLng.Designer.cs">
+      <DependentUpon>201806152001183_UpdateLocationsLatLng.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\EMail.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
@@ -589,10 +597,6 @@
     <Content Include="Views\Location\Details.cshtml" />
     <Content Include="Views\Location\Route.cshtml" />
     <Content Include="Views\Location\UnitDetails.cshtml" />
-
- 
-
-
     <Content Include="Views\WorkOrder\Index.cshtml" />
     <Content Include="Views\WorkOrder\Details.cshtml" />
     <Content Include="Views\WorkOrder\Edit.cshtml" />
@@ -620,6 +624,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806142016460_SeedData.resx">
       <DependentUpon>201806142016460_SeedData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806152000400_UpdateLocationWithLatLng.resx">
+      <DependentUpon>201806152000400_UpdateLocationWithLatLng.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806152001183_UpdateLocationsLatLng.resx">
+      <DependentUpon>201806152001183_UpdateLocationsLatLng.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
