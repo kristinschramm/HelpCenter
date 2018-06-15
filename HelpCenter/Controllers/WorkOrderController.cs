@@ -218,29 +218,7 @@ namespace HelpCenter.Controllers
                 .Include(w => w.Unit)
                 .Single(w => w.Id == newWorkOrder.Id);
 
-            var email = new EMail();
-            email.CreateDateTime = DateTime.Now;
-            email.ToEmailAddress = newWorkOrder.Requestor.EmailAddress;
-            email.Subject = $"{newWorkOrder.Subject} - Work Order # {newWorkOrder.Id} Created";
-            email.Body = $"Work Order #{newWorkOrder.Id} has been created per your request.";
-            email.Body = $"Work Order #{newWorkOrder.Id} has been created per your request." + $"\n\nStatus: {newWorkOrder.Status.Name}";
-            if(newWorkOrder.AssignedUser != null)
-            {
-                email.Body = email.Body + "\nAssinged To: " + newWorkOrder.AssignedUser.NameFirstLastEmail;
-            }
-            else
-            {
-                email.Body = email.Body + "\nAssigned To: Not Currently Assigned";
-            }
-            
-            email.Body = email.Body + "\nLocation: " + newWorkOrder.Location == null ? "No Location Provided" : newWorkOrder.Location.Name + ", " + newWorkOrder.Location.Address;
-            email.Body = email.Body + newWorkOrder.Unit.Number;
-            email.Body = email.Body + $"\n\nCategory: {newWorkOrder.Category.Name}\nSubject: {newWorkOrder.Subject}";
-            email.Body = email.Body + $"\n{newWorkOrderComment.Comment}";
-            email.Sent = false;
-
-            _context.EMails.Add(email);
-            _context.SaveChanges();
+            SendEmail("new", newWorkOrder);
 
             return RedirectToAction("Index", "WorkOrder");
         }
@@ -276,7 +254,11 @@ namespace HelpCenter.Controllers
             }
             else if(User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
             {
-                var comments = _context.WorkOrderComments.Where(w => w.WorkOrderId == id).OrderByDescending(w => w.CreateDateTime).ToList();
+                var comments = _context.WorkOrderComments
+                    .Include(w => w.Commentor)
+                    .Where(w => w.WorkOrderId == id)
+                    .OrderByDescending(w => w.CreateDateTime)
+                    .ToList();
                 var viewModel = new WorkOrderViewModel()
                 {
                     WorkOrder = workOrder,
@@ -351,9 +333,25 @@ namespace HelpCenter.Controllers
 
             _context.SaveChanges();
 
+            workOrderInDb = _context.WorkOrders
+                .Include(w => w.AssignedUser)
+                .Include(w => w.Category)
+                .Include(w => w.Location)
+                .Include(w => w.Requestor)
+                .Include(w => w.Status)
+                .Include(w => w.Unit)
+                .Single();
+
             if (sendStatusEmail)
             {
-                // Send Email Here
+                if(workOrderInDb.Status.IsOpen)
+                {
+                    SendEmail("updated", workOrderInDb);
+                }
+                else
+                {
+                    SendEmail("closed", workOrderInDb);
+                }
             }
 
             return RedirectToAction("Index");
@@ -387,7 +385,78 @@ namespace HelpCenter.Controllers
         public void SendEmail (string emailType, WorkOrder workOrder)
         {
             var email = new EMail();
+            var workOrderDescription = _context.WorkOrderComments.Where(w => w.Id == workOrder.Id).OrderBy(w => w.CreateDateTime).First().Comment;
+            var lastComment = _context.WorkOrderComments.Where(w => w.Id == workOrder.Id).OrderByDescending(w => w.CreateDateTime).First().Comment;
+            switch (emailType.ToLower())
+            {
+                case "new":
+                    email.CreateDateTime = DateTime.Now;
+                    email.ToEmailAddress = workOrder.Requestor.EmailAddress;
+                    email.Subject = $"{workOrder.Subject} - Work Order # {workOrder.Id} Created";
+                    email.Body = $"Work Order #{workOrder.Id} has been created per your request." + $"\n\r\n\rStatus: {workOrder.Status.Name}";
+                    if (workOrder.AssignedUser != null)
+                    {
+                        email.Body = email.Body + "\n\r\n\r\n\rAssinged To: " + workOrder.AssignedUser.NameFirstLastEmail;
+                    }
+                    else
+                    {
+                        email.Body = email.Body + "\n\r\n\r\n\rAssigned To: Not Currently Assigned";
+                    }
 
+                    email.Body = workOrder.Location == null ? email.Body + "\n\rLocation: " + "No Location Provided" : email.Body + "\n\r\n\r\n\rLocation: " + workOrder.Location.Name + ", " + workOrder.Location.Address;
+                    email.Body = email.Body + " " + workOrder.Unit.Number;
+                    email.Body = email.Body + $"\n\r\n\r\n\r\n\rCategory: {workOrder.Category.Name}\n\r\n\r\n\rSubject: {workOrder.Subject}";
+                    email.Body = email.Body + $"\n\r\n\r\n\r{workOrderDescription}";
+                    email.Sent = false;
+                    break;
+
+                case "updated":
+                default:
+                    email.CreateDateTime = DateTime.Now;
+                    email.ToEmailAddress = workOrder.Requestor.EmailAddress;
+                    email.Subject = $"{workOrder.Subject} - Work Order # {workOrder.Id} Updated";
+                    email.Body = $"Work Order #{workOrder.Id} has been updated." + $"\n\r\n\rStatus: {workOrder.Status.Name}";
+                    email.Body = email.Body + "\n\r\n\r\n\r\n\r" + lastComment + "\n\r\n\r\n\r\n\r";
+                    if (workOrder.AssignedUser != null)
+                    {
+                        email.Body = email.Body + "\n\r\n\r\n\rAssinged To: " + workOrder.AssignedUser.NameFirstLastEmail;
+                    }
+                    else
+                    {
+                        email.Body = email.Body + "\n\r\n\r\n\rAssigned To: Not Currently Assigned";
+                    }
+
+                    email.Body = email.Body + workOrder.Location == null ? email.Body + "\n\r\n\r\n\rLocation: " + "No Location Provided" : email.Body + "\n\r\n\r\n\rLocation: " + workOrder.Location.Name + ", " + workOrder.Location.Address;
+                    email.Body = email.Body + " " + workOrder.Unit.Number;
+                    email.Body = email.Body + $"\n\r\n\r\n\r\n\rCategory: {workOrder.Category.Name}\n\r\n\r\n\rSubject: {workOrder.Subject}";
+                    email.Body = email.Body + $"\n\r\n\r\n\r{workOrderDescription}";
+                    email.Sent = false;
+                    break;
+                case "closed":
+                    email.CreateDateTime = DateTime.Now;
+                    email.ToEmailAddress = workOrder.Requestor.EmailAddress;
+                    email.Subject = $"{workOrder.Subject} - Work Order # {workOrder.Id} Updated";
+                    email.Body = $"Work Order #{workOrder.Id} has been completed." + $"\n\r\n\r\n\r\n\rStatus: {workOrder.Status.Name}";
+                    email.Body = email.Body + "\n\r\n\r\n\r\n\r" + lastComment + "\n\r\n\r\n\r\n\r";
+                    if (workOrder.AssignedUser != null)
+                    {
+                        email.Body = email.Body + "\n\r\n\r\n\rAssinged To: " + workOrder.AssignedUser.NameFirstLastEmail;
+                    }
+                    else
+                    {
+                        email.Body = email.Body + "\n\r\n\r\n\rAssigned To: Not Currently Assigned";
+                    }
+
+                    email.Body = email.Body + workOrder.Location == null ? email.Body + "\n\r\n\r\n\rLocation: " + "No Location Provided" : email.Body + "\n\r\n\r\n\rLocation: " + workOrder.Location.Name + ", " + workOrder.Location.Address;
+                    email.Body = email.Body + " " +  workOrder.Unit.Number;
+                    email.Body = email.Body + $"\n\r\n\r\n\r\n\rCategory: {workOrder.Category.Name}\n\r\n\r\n\rSubject: {workOrder.Subject}";
+                    email.Body = email.Body + $"\n\r\n\r\n\r{workOrderDescription}";
+                    email.Sent = false;
+                    break;
+
+            }
+            _context.EMails.Add(email);
+            _context.SaveChanges();
         }
 
         public ActionResult Status(string id)
