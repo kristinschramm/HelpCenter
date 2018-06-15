@@ -82,14 +82,7 @@
                 @foreach (var workOrder in Model)
                 {
                     <tr>
-                        @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
-                        {
-                            <td>@Html.ActionLink(workOrder.Id.ToString(), "Edit", new { id = workOrder.Id }, null)</td>
-                        }
-                        else
-                        {
-                            <td>@Html.ActionLink(workOrder.Id.ToString(), "Details", new { id = workOrder.Id }, null)</td>
-                        }
+                        <td>@Html.ActionLink(workOrder.Id.ToString(), "Details", new { id = workOrder.Id }, null)</td>
                         <td>@workOrder.Requestor.NameFirstLast</td>
                         <td>@workOrder.Location.Name<br />@workOrder.Location.City, @workOrder.Location.State</td>
                         <td>@workOrder.Category.Name</td>

@@ -43,12 +43,13 @@ namespace HelpCenter.Models
         public int? LocationId { get; set; }
         public IEnumerable<Location> Locations { get; set; }
 
-
+        [Required]
+        [Display(Name ="Unit")]
         public int? UnitId { get; set; }
-        public Unit Unit { get; set; }
 
+        [Display(Name ="Assigned To")]
         public string AssignedUserId { get; set; }
-        public AppUser AssignedUser { get; set; }
+        public List<AppUser> Employees { get; set; }
 
         public DateTime CreateDateTime { get; set; }
 

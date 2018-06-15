@@ -292,6 +292,27 @@ namespace HelpCenter.Controllers
         public ActionResult Edit (int id)
         {
             var workOrder = _context.WorkOrders.Single(w => w.Id == id);
+            var viewModel = new WorkOrderEditViewModel()
+            {
+                Id = workOrder.Id,
+                AssignedUserId = workOrder.AssignedUserId,
+                CategoryId = workOrder.CategoryId,
+                CreateDateTime = workOrder.CreateDateTime,
+                ExpectedCompletionDateTime = workOrder.ExpectedCompletionDateTime,
+                LocationId = workOrder.LocationId,
+                ModifiedDateTime = workOrder.ModifiedDateTime,
+                RequestorId = workOrder.RequestorId,
+                StatusId = workOrder.StatusId,
+                StatusDateTime = workOrder.StatusDateTime,
+                Subject = workOrder.Subject,
+                UnitId = workOrder.UnitId
+            };
+
+            viewModel.Categories = _context.WorkOrderCategories.OrderBy(w => w.Name).ToList();
+            viewModel.Locations = _context.Locations.OrderBy(l => l.Name).ToList();
+            viewModel.Statuses = _context.WorkOrderStatus.ToList();
+            viewModel.Users = _context.AppUsers.OrderBy(a => a.NameFirst).ThenBy(a => a.NameLast).ToList();
+            viewModel.Employees = _context.AppUsers.Where(a => !(a is LeaseHolder)).OrderBy(a => a.NameFirst).ThenBy(a => a.NameLast).ToList();
 
             return View(workOrder);
         }
