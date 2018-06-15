@@ -340,7 +340,7 @@ namespace HelpCenter.Controllers
                 .Include(w => w.Requestor)
                 .Include(w => w.Status)
                 .Include(w => w.Unit)
-                .Single();
+                .Single(w => w.Id == workOrderInDb.Id);
 
             if (sendStatusEmail)
             {
@@ -386,7 +386,7 @@ namespace HelpCenter.Controllers
         {
             var email = new EMail();
             var workOrderDescription = _context.WorkOrderComments.Where(w => w.Id == workOrder.Id).OrderBy(w => w.CreateDateTime).First().Comment;
-            var lastComment = _context.WorkOrderComments.Where(w => w.Id == workOrder.Id).OrderByDescending(w => w.CreateDateTime).First().Comment;
+            var comments = _context.WorkOrderComments.Where(w => w.Id == workOrder.Id).OrderBy(w => w.CreateDateTime).ToList();
             switch (emailType.ToLower())
             {
                 case "new":
@@ -416,7 +416,7 @@ namespace HelpCenter.Controllers
                     email.ToEmailAddress = workOrder.Requestor.EmailAddress;
                     email.Subject = $"{workOrder.Subject} - Work Order # {workOrder.Id} Updated";
                     email.Body = $"Work Order #{workOrder.Id} has been updated." + $"\n\r\n\rStatus: {workOrder.Status.Name}";
-                    email.Body = email.Body + "\n\r\n\r\n\r\n\r" + lastComment + "\n\r\n\r\n\r\n\r";
+                    email.Body = email.Body + "\n\r\n\r\n\r" + comments[comments.Count - 1].Comment;
                     if (workOrder.AssignedUser != null)
                     {
                         email.Body = email.Body + "\n\r\n\r\n\rAssinged To: " + workOrder.AssignedUser.NameFirstLastEmail;
@@ -437,7 +437,7 @@ namespace HelpCenter.Controllers
                     email.ToEmailAddress = workOrder.Requestor.EmailAddress;
                     email.Subject = $"{workOrder.Subject} - Work Order # {workOrder.Id} Updated";
                     email.Body = $"Work Order #{workOrder.Id} has been completed." + $"\n\r\n\r\n\r\n\rStatus: {workOrder.Status.Name}";
-                    email.Body = email.Body + "\n\r\n\r\n\r\n\r" + lastComment + "\n\r\n\r\n\r\n\r";
+                    email.Body = email.Body + "\n\r\n\r\n\r\n\r" + comments[comments.Count - 1].Comment;
                     if (workOrder.AssignedUser != null)
                     {
                         email.Body = email.Body + "\n\r\n\r\n\rAssinged To: " + workOrder.AssignedUser.NameFirstLastEmail;
