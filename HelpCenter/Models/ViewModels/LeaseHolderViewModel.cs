@@ -10,7 +10,10 @@ namespace HelpCenter.Models.ViewModels
         public LeaseHolder LeaseHolder { get; set; }
         public int OpenWorkOrderCount { get; set; }
         public Location Location { get; set; }
+        public List<Location> Locations { get; set; }
 
         public Unit Unit { get; set; }
+
+        public List<WorkOrder> WorkOrders { get; set; }
      }
 }

@@ -1,10 +1,7 @@
 ﻿@model HelpCenter.Models.ViewModels.LeaseHolderViewModel
-@{ ViewBag.Title = Model.NameFirst + " " + Model.NameLast + " - User Details";
+@{ ViewBag.Title = "Edit " + Model.LeaseHolder.NameFirst + " " + Model.LeaseHolder.NameLast + " - User Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Edit Profile</h2>
-<p>@Html.ActionLink("Account Settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</p>
 
 
 <h2>@ViewBag.Title</h2>
@@ -12,25 +9,25 @@
 {
 
     <div class="form-group">
-        @Html.LabelFor(l => l.NameFirst, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(l => l.LeaseHolder.NameFirst, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(l => l.NameFirst, new { @class = "form-control" })
+            @Html.TextBoxFor(l => l.LeaseHolder.NameFirst, new { @class = "form-control" })
         </div>
-        @Html.LabelFor(l => l.NameLast, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(l => l.LeaseHolder.NameLast, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(l => l.NameLast, new { @class = "form-control" })
+            @Html.TextBoxFor(l => l.LeaseHolder.NameLast, new { @class = "form-control" })
         </div>
-        @Html.LabelFor(l => l.PhoneNumber, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(l => l.LeaseHolder.PhoneNumber, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(l => l.PhoneNumber, new { @class = "form-control" })
+            @Html.TextBoxFor(l => l.LeaseHolder.PhoneNumber, new { @class = "form-control" })
         </div>
-        @Html.LabelFor(l => l.LocationId, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(l => l.LeaseHolder.LocationId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(l => l.LocationId, new SelectList(Model.LocationsList, "Id", "Name"), "Select Location", new { @class = "form-control" });
+            @Html.DropDownListFor(l => l.LeaseHolder.LocationId, new SelectList(Model.Locations, "Id", "Name"), "Select Location", new { @class = "form-control" })
         </div>
-        @Html.LabelFor(l=> l.UnitId, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(l=> l.LeaseHolder.UnitId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(l => l.Unit.Number, new { @class = "form-control" })
+            @Html.TextBoxFor(l => l.LeaseHolder.Unit.Number, new { @class = "form-control" })
         </div>
     </div>
 }

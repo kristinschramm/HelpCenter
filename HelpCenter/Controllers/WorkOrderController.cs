@@ -58,6 +58,32 @@ namespace HelpCenter.Controllers
             return View(workOrders);
         }
 
+        public ActionResult AddComment(WorkOrderViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var newComment = new WorkOrderComment()
+                {
+                    Comment = model.NewComment,
+                    CommentorId = User.Identity.GetUserId(),
+                    CreateDateTime = DateTime.Now,
+                    WorkOrderId = model.WorkOrder.Id
+                };
+
+                _context.WorkOrderComments.Add(newComment);
+
+                var workOrderInDb = _context.WorkOrders.Single(w => w.Id == model.WorkOrder.Id);
+
+                workOrderInDb.ModifiedDateTime = DateTime.Now;
+
+                _context.SaveChanges();
+
+                return RedirectToAction("Details", new { id = model.WorkOrder.Id });
+            }
+            ModelState.AddModelError(string.Empty, "Comment field is required.");
+            return RedirectToAction("Details", new { id = model.WorkOrder.Id });
+        }
+
         public ActionResult Closed()
         {
             List<WorkOrder> workOrders;
@@ -250,7 +276,7 @@ namespace HelpCenter.Controllers
             }
             else if(User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
             {
-                var comments = _context.WorkOrderComments.Where(w => w.WorkOrderId == id).ToList();
+                var comments = _context.WorkOrderComments.Where(w => w.WorkOrderId == id).OrderByDescending(w => w.CreateDateTime).ToList();
                 var viewModel = new WorkOrderViewModel()
                 {
                     WorkOrder = workOrder,

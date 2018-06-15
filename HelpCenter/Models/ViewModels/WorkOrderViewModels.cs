@@ -10,6 +10,9 @@ namespace HelpCenter.Models
     {
         public WorkOrder WorkOrder { get; set; }
         public List<WorkOrderComment> Comments { get; set; }
+        [Required]
+        [Display(Name ="New Comment")]
+        public string NewComment { get; set; }
     }
 
     public class CreateWorkOrderViewModel
