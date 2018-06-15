@@ -242,7 +242,7 @@ namespace HelpCenter.Controllers
             _context.EMails.Add(email);
             _context.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "WorkOrder");
         }
 
         public ActionResult Details (int id)

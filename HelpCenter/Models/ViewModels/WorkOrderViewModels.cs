@@ -15,6 +15,48 @@ namespace HelpCenter.Models
         public string NewComment { get; set; }
     }
 
+    public class WorkOrderEditViewModel
+    {
+        public int Id { get; set; }
+
+        public string Subject { get; set; }
+
+        [Required]
+        [Display(Name ="Category")]
+        public int? CategoryId { get; set; }
+        public IEnumerable<WorkOrderCategory> Categories { get; set; }
+
+        [Required]
+        [Display(Name ="Status")]
+        public int StatusId { get; set; }
+        public IEnumerable<WorkOrderStatus> Statuses { get; set; }
+
+        public DateTime StatusDateTime { get; set; }
+
+        [Required]
+        [Display(Name ="Requested by")]
+        public string RequestorId { get; set; }
+        public List<AppUser> Users { get; set; }
+
+        [Required]
+        [Display(Name ="Location")]
+        public int? LocationId { get; set; }
+        public IEnumerable<Location> Locations { get; set; }
+
+
+        public int? UnitId { get; set; }
+        public Unit Unit { get; set; }
+
+        public string AssignedUserId { get; set; }
+        public AppUser AssignedUser { get; set; }
+
+        public DateTime CreateDateTime { get; set; }
+
+        public DateTime ModifiedDateTime { get; set; }
+
+        public DateTime? ExpectedCompletionDateTime { get; set; }
+    }
+
     public class CreateWorkOrderViewModel
     {
         [Required]
