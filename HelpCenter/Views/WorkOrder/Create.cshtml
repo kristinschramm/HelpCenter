@@ -118,7 +118,7 @@
         $(document).ready(function () {
             $('#LocationId').change(function () {
                 $('#UnitId option').remove();
-                $('#UnitId').append('<option value = null> N/A </option>');
+                $('#UnitId').append('<option value = null> All Units </option>');
                 $.getJSON('/workorder/GetUnitsByLocationId', { locationId: $('#LocationId').val() }, function (data) {
                     $.each(data, function () {
                         $('#UnitId').append('<option value=' +

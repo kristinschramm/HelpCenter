@@ -305,7 +305,8 @@ namespace HelpCenter.Controllers
                 StatusId = workOrder.StatusId,
                 StatusDateTime = workOrder.StatusDateTime,
                 Subject = workOrder.Subject,
-                UnitId = workOrder.UnitId
+                UnitId = workOrder.UnitId,
+                Description = _context.WorkOrderComments.Where(w => w.WorkOrderId == workOrder.Id).OrderBy(w => w.CreateDateTime).FirstOrDefault().Comment
             };
 
             viewModel.Categories = _context.WorkOrderCategories.OrderBy(w => w.Name).ToList();
@@ -314,7 +315,7 @@ namespace HelpCenter.Controllers
             viewModel.Users = _context.AppUsers.OrderBy(a => a.NameFirst).ThenBy(a => a.NameLast).ToList();
             viewModel.Employees = _context.AppUsers.Where(a => !(a is LeaseHolder)).OrderBy(a => a.NameFirst).ThenBy(a => a.NameLast).ToList();
 
-            return View(workOrder);
+            return View(viewModel);
         }
 
         [HttpPost]

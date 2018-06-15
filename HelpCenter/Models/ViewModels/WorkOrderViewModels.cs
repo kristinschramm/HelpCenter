@@ -17,6 +17,7 @@ namespace HelpCenter.Models
 
     public class WorkOrderEditViewModel
     {
+        [Display(Name ="Work Order #")]
         public int Id { get; set; }
 
         public string Subject { get; set; }
@@ -56,6 +57,8 @@ namespace HelpCenter.Models
         public DateTime ModifiedDateTime { get; set; }
 
         public DateTime? ExpectedCompletionDateTime { get; set; }
+
+        public string Description { get; set; }
     }
 
     public class CreateWorkOrderViewModel
