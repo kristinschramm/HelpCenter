@@ -591,7 +591,7 @@
     <Content Include="Views\Location\Route.cshtml" />
     <Content Include="Views\Location\UnitDetails.cshtml" />
     <Content Include="Views\Map\Map.cshtml" />
-    <Content Include="Views\WorkOrder\Index.cshtml" />
+    <Content Include="Views\Map\Index.cshtml" />
     <Content Include="Views\WorkOrder\Details.cshtml" />
     <Content Include="Views\WorkOrder\Edit.cshtml" />
   </ItemGroup>

@@ -1,0 +1,112 @@
+﻿@model IEnumerable<WorkOrder>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<h2>Geocoding</h2>
+@{    var listAddress = new List<string>();
+            foreach (var workOrder in Model)
+            {
+
+                var address = workOrder.Location.Address + workOrder.Location.City + workOrder.Location.State + workOrder.Location.Zip;
+                listAddress.Add(address);
+            }
+}
+        var arr = JSON.parse('@Html.Raw(Json.Encode(listAddress))')
+
+<div id="map"></div>
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 8,
+            center: { lat: -34.397, lng: 150.644 }
+        });
+        var geocoder = new google.maps.Geocoder();
+
+
+
+
+        function geocodeAddress(geocoder, resultsMap) {
+            foreach(address in listAddress)
+            {
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status === 'OK') {
+                        resultsMap.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: resultsMap,
+                            position: results[0].geometry.location
+                        });
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            };
+        }
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBycNjxsf61mG3nhPLvyHRUb2MuMHoFipk&callback=initMap"
+        async defer></script>
+
+<hr />
+<div class="row">
+    <div class="col-md-2">
+        <h4>Additional Views</h4>
+        <ul>
+            <li>@Html.ActionLink("My Work Orders", "MyWorkOrders")</li>
+            <li>@Html.ActionLink("Open", "Open")</li>
+            <li>@Html.ActionLink("New", "Status", new { id = "NEW" })</li>
+            <li>@Html.ActionLink("Assigned", "Status", new { id = "Assigned" })</li>
+            <li>@Html.ActionLink("In Progress", "Status", new { id = "IN PROGRESS" })</li>
+            <li>@Html.ActionLink("Closed", "Closed")</li>
+            <li>@Html.ActionLink("All Work Orders", "Index")</li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <table id="workorders" class="table table-bordered table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>WO #</th>
+                    <th>Requestor</th>
+                    <th>Location</th>
+                    <th>Category</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Modified</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var workOrder in Model)
+                {
+                    <tr>
+                        @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+                        {
+                            <td>@Html.ActionLink(workOrder.Id.ToString(), "Edit", new { id = workOrder.Id }, null)</td>
+                        }
+                        else
+                        {
+                            <td>@Html.ActionLink(workOrder.Id.ToString(), "Details", new { id = workOrder.Id }, null)</td>
+                        }
+                        <td>@workOrder.Requestor.NameFirstLast</td>
+                        <td>@workOrder.Location.Name<br />@workOrder.Location.City, @workOrder.Location.State</td>
+                        <td>@workOrder.Category.Name</td>
+                        <td>@workOrder.Subject</td>
+                        <td title="@workOrder.StatusDateTime.ToString("MM/dd/yyyy HH:mm")">@workOrder.Status.Name</td>
+                        <td>@workOrder.ModifiedDateTime.ToString("MM/dd/yy HH:mm")</td>
+                        <td>@workOrder.CreateDateTime.ToString("MM/dd/yy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#workorders").DataTable();
+        })
+    </script>
+}
