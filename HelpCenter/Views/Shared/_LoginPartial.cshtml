@@ -11,7 +11,7 @@
         <li>@Html.ActionLink("Profile", "Edit", "Employee", new { id = User.Identity.GetUserId() }, null)</li>}
   @if (User.IsInRole(RoleName.LeaseHolder))
   {
-      <li>@Html.ActionLink("Profile", "Edit", "LeaseHolder", new { id = User.Identity.GetUserId() })</li> }
+      <li>@Html.ActionLink("Profile", "Edit", "LeaseHolder", new { id = User.Identity.GetUserId() }, null )</li> }
 
     <li>@Html.ActionLink("Submit Work Order", "Create", "WorkOrder")</li>
     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>

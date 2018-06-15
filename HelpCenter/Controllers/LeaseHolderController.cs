@@ -63,11 +63,15 @@ namespace HelpCenter.Controllers
 
         public ActionResult Details(string id)
         {
+            if (User.IsInRole(RoleName.LeaseHolder))
+            {
+                id = User.Identity.GetUserId();
+            }
             var leaseHolder = _context.LeaseHolders
                    .Single(l => l.Id == id);
             var locationList = _context.Locations.ToList();
             var unit = _context.Units.Single(u => u.Id == leaseHolder.UnitId);
-            var workOrders = _context.WorkOrders.Where(w => w.RequestorId == leaseHolder.Id).ToList();
+            var workOrders = _context.WorkOrders.Include(w => w.Category).Include(w=>w.Status).Where(w => w.RequestorId == leaseHolder.Id).ToList();
 
             var viewModel = new LeaseHolderViewModel();
             {

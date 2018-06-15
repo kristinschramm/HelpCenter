@@ -9,7 +9,8 @@
     <div class="col-md-2">
         <h4>Additional Views</h4>
         <ul>
-            <li>@Html.ActionLink("My Work Orders", "MyWorkOrders")</li>
+            @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
+            {<li>@Html.ActionLink("My Work Orders", "MyWorkOrders")</li>}
             <li>@Html.ActionLink("Open", "Open")</li>
             <li>@Html.ActionLink("New", "Status", new { id = "NEW" })</li>
             <li>@Html.ActionLink("Assigned", "Status", new { id = "Assigned" })</li>
