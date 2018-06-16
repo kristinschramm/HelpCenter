@@ -15,20 +15,30 @@
     <dt>Work Order #</dt>
     <dd>@Model.WorkOrder.Id</dd>
     <dt>Requested by</dt>
-    <dd>@Model.WorkOrder.Requestor.NameFirstLastEmail</dd>
+    <dd>@(Model.WorkOrder.Requestor != null ? @Model.WorkOrder.Requestor.NameFirstLastEmail : "-")</dd>
     <dt>Location</dt>
-    <dd>@Model.WorkOrder.Location.Name</dd>
-    <dd>@Model.WorkOrder.Location.Address</dd>
-    <dd>@Model.WorkOrder.Location.City, @Model.WorkOrder.Location.State @Model.WorkOrder.Location.Zip</dd>
+    @if (Model.WorkOrder.Location != null)
+    {
+        <dd>@Model.WorkOrder.Location.Name</dd>
+        <dd>@Model.WorkOrder.Location.Address</dd>
+        <dd>@Model.WorkOrder.Location.City, @Model.WorkOrder.Location.State @Model.WorkOrder.Location.Zip</dd>
+    }
+    else
+    {
+        <dd>-</dd>
+    }
     <dt>Unit</dt>
-    <dd>@Model.WorkOrder.Unit.Number</dd>
+    <dd>@(Model.WorkOrder.Unit != null ? Model.WorkOrder.Unit.Number : "-")</dd>
     <hr />
     <dt>Category</dt>
     <dd>@(Model.WorkOrder.Category != null ? Model.WorkOrder.Category.Name : "-")</dd>
     <dt>Subject</dt>
     <dd>@Model.WorkOrder.Subject</dd>
     <dt>Description</dt>
-    <dd>@Model.Comments[Model.Comments.Count - 1].Comment</dd>
+    @if (Model.Comments.Count > 0)
+    {
+        <dd>@Model.Comments[Model.Comments.Count - 1].Comment</dd>
+    }
     <hr />
     <dt>Assigned to</dt>
     @if (Model.WorkOrder.AssignedUser != null)
@@ -85,11 +95,19 @@
     <tbody>
         @foreach (var comment in Model.Comments)
         {
-            <tr>
-                <td>@comment.CreateDateTime.ToString("MM/dd/yyyy HH:mm")</td>
+        <tr>
+            <td>@comment.CreateDateTime.ToString("MM/dd/yyyy HH:mm")</td>
+            @if (comment.Commentor != null)
+            {
                 <td>@comment.Commentor.NameFirstLastEmail</td>
-                <td>@comment.Comment</td>
-            </tr>
+            }
+            else
+            {
+                <td>-</td>
+            }
+
+            <td>@comment.Comment</td>
+        </tr>
         }
     </tbody>
 </table>
