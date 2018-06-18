@@ -156,9 +156,6 @@ namespace HelpCenter.Controllers
         {
             if (ModelState.IsValid)
             {
-                var unit = _context.Units.SingleOrDefault(u => u.LocationId == model.LocationId && u.Number == model.UnitInput);
-                if(unit != null)
-                {
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                     var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -178,7 +175,7 @@ namespace HelpCenter.Controllers
                             NameFirst = model.NameFirst,
                             NameLast = model.NameLast,
                             PhoneNumber = model.PhoneNumber,
-                            UnitId = unit.Id
+                            UnitId = model.UnitId
                         };
 
                         _context.AppUsers.Add(leaseHolder);
@@ -195,11 +192,6 @@ namespace HelpCenter.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                     AddErrors(result);
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, $"'{model.UnitInput}' is not a valid unit number.");
-                }
             }
 
             // If we got this far, something failed, redisplay form

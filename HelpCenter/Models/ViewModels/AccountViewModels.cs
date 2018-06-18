@@ -87,7 +87,6 @@ namespace HelpCenter.Models
 
         [Display(Name = "Unit Number")]
         [Required]
-        public string UnitInput { get; set; }
         public int UnitId { get; set; }
         
         [Required]

@@ -357,6 +357,7 @@ namespace HelpCenter.Controllers
             return RedirectToAction("Index");
         }
 
+        [AllowAnonymous]
         public JsonResult GetUnitsByLocationId(int locationId)
         {
             var units = _context.Units.Where(u => u.LocationId == locationId).ToList();
