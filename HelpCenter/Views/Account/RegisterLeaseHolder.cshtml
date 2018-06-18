@@ -73,16 +73,17 @@
 @section scripts {
     <script>
         $(document).ready(function () {
-            $('#LeaseHolder_LocationId').change(function () {
-                $('#LeaseHolder_UnitId option').remove();
-                $('#LeaseHolder_UnitId').append('<option value=null> N/A </option>');
-                $.getJSON('/workorder/GetUnitsByLocationId', { locationId: $('#LeaseHolder_LocationId').val() }, function (data) {
+            $("#UnitId").focus(function () {
+                $('#UnitId option').remove();
+                $('#UnitId').append('<option value = null> All Units </option>');
+                $.getJSON('/workorder/GetUnitsByLocationId', { locationId: $('#LocationId').val() }, function (data) {
                     $.each(data, function () {
-                        $('#LeaseHolder_UnitId').append('<option value=' + this.Id + '>' + this.Number + '</option>');
+                        $('#UnitId').append('<option value=' +
+                            this.Id + '>' + this.Number + '</option>');
                     });
                 }).fail(function (jqXHR, textStatus, errorThrown) {
-                    alert('Error retrieving units. ' + textStatus + " " + errorThrown);
+                    console.log('Error retrieving units. ' + textStatus + " " + errorThrown);
                 });
             });
-        });
+        })
     </script>}

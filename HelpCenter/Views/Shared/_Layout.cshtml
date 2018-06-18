@@ -27,7 +27,7 @@
                     @if (User.IsInRole(RoleName.LeaseHolder))
                     {
 
-                        <li>@Html.ActionLink("Work Orders", "Details", "LeaseHolder")</li>
+                        <li>@Html.ActionLink("Work Orders", "Index", "WorkOrder")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     }
                     @if (User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Technician))
