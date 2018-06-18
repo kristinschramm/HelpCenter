@@ -406,7 +406,15 @@ namespace HelpCenter.Controllers
 
                     email.Body = workOrder.Location == null ? email.Body + "\n\rLocation: " + "No Location Provided" : email.Body + "\n\r\n\r\n\rLocation: " + workOrder.Location.Name + ", " + workOrder.Location.Address;
                     email.Body = email.Body + " " + workOrder.Unit.Number;
-                    email.Body = email.Body + $"\n\r\n\r\n\r\n\rCategory: {workOrder.Category.Name}\n\r\n\r\n\rSubject: {workOrder.Subject}";
+                    if(workOrder.Category != null)
+                    {
+                        email.Body = email.Body + $"\n\r\n\r\n\r\n\rCategory: {workOrder.Category.Name}\n\r\n\r\n\rSubject: {workOrder.Subject}";
+                    }
+                    else
+                    {
+                        email.Body = email.Body + $"\n\r\n\r\n\r\n\rCategory: -\n\r\n\r\n\rSubject: {workOrder.Subject}";
+                    }
+                    
                     email.Body = email.Body + $"\n\r\n\r\n\r{workOrderDescription}";
                     email.Sent = false;
                     break;
