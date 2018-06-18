@@ -4,53 +4,59 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<h2>Geocoding</h2>
-@{    var listAddress = new List<string>();
+@using Newtonsoft.Json;
+@{
+    var latList = new List<double>();
+    var lngList = new List<double>();
     foreach (var workOrder in Model)
     {
-        if(workOrder.Location != null)
+        if (workOrder.Location != null)
         {
-            var address = workOrder.Location.Address + workOrder.Location.City + workOrder.Location.State + workOrder.Location.Zip;
-            listAddress.Add(address);
+            latList.Add(workOrder.Location.Lat);
+            lngList.Add(workOrder.Location.Lng);
         }
-    }
-}
-        var arr = JSON.parse('@Html.Raw(Json.Encode(listAddress))')
 
+    }
+   
+   
+}
 <div id="map"></div>
+
 <script>
+    var lats = @Html.Raw(JsonConvert.SerializeObject(latList, Formatting.Indented,
+                            new JsonSerializerSettings
+                            {
+                                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                            }));
+    var lngs =@Html.Raw(JsonConvert.SerializeObject(lngList, Formatting.Indented,
+                            new JsonSerializerSettings
+                            {
+                                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                            }));
+
+   
+
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 8,
-            center: { lat: -34.397, lng: 150.644 }
+            zoom: 11,
+            center: { lat: 43.05, lng: -87.91 }
         });
-        var geocoder = new google.maps.Geocoder();
 
+        for (let i = 0; i < lats.length && i < lngs.length; i++) {
 
-
-
-        function geocodeAddress(geocoder, resultsMap) {
-            foreach(address in listAddress)
-            {
-                geocoder.geocode({ 'address': address }, function (results, status) {
-                    if (status === 'OK') {
-                        resultsMap.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                            map: resultsMap,
-                            position: results[0].geometry.location
-                        });
-                    } else {
-                        alert('Geocode was not successful for the following reason: ' + status);
-                    }
-                });
-            };
+            let marker = new google.maps.Marker({ position: new google.maps.LatLng(lats[i], lngs[i]), map: map })
         }
+         
     }
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBycNjxsf61mG3nhPLvyHRUb2MuMHoFipk&callback=initMap"
         async defer></script>
+
 
 <hr />
 <div class="row">
@@ -100,9 +106,9 @@
                     <tr>
                         <td>@Html.ActionLink(workOrder.Id.ToString(), "Details", new { id = workOrder.Id }, null)</td>
                         <td>@(workOrder.Requestor != null ? workOrder.Requestor.NameFirstLast : "-")</td>
-                        @if(workOrder.Location != null)
+                        @if (workOrder.Location != null)
                         {
-                        <td>@workOrder.Location.Name<br />@workOrder.Location.City, @workOrder.Location.State</td>
+                            <td>@workOrder.Location.Name<br />@workOrder.Location.City, @workOrder.Location.State</td>
                         }
                         else
                         {
@@ -120,9 +126,14 @@
     </div>
 </div>
 @section scripts{
+
+
     <script>
         $(document).ready(function () {
             $("#workorders").DataTable();
+
         })
     </script>
+
+
 }
